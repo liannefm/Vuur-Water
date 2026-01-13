@@ -1,6 +1,11 @@
 @font-face {
-  font-family: 'vuurjongen';
+  font-family: 'gamenamen';
   src: url('assets/font/algerian-regular.ttf');
+}
+
+@font-face {
+  font-family: 'gametekst';
+  src: url('assets/font/agencyb.ttf');
 }
 
 html, body {
@@ -15,3 +20,231 @@ body {
     background-position: center;
     background-repeat: no-repeat
 }
+
+/* titel stuk fireboy watergirl tekst */
+#titelboxboven{
+  display: flex;
+  justify-content: center;
+  gap: 45px;
+  margin-bottom: -70px;
+}
+#titelboxbeneden{
+  display: flex;
+  justify-content: center;
+}
+
+#fireboy{
+  color: #ff7f00;
+  font-size: 80px;
+  font-family: 'gamenamen';
+  animation: firePulse 1.5s ease-in-out infinite;
+    text-shadow:
+    4px 4px 8px rgba(0,0,0,0.7),
+    0px 0px 12px rgba(255,120,0,0.8),
+    0px 0px 24px rgba(255,80,0,0.6);
+}
+
+#watergirl{
+  color: #80daeb;
+  font-size: 80px;
+  font-family: 'gamenamen';
+  animation: waterPulse 1.5s ease-in-out infinite;
+    text-shadow:
+    4px 4px 8px rgba(0, 0, 0, 0.7),   /* donkere schaduw */
+    0px 0px 12px rgba(0, 180, 255, 0.8), /* blauwe gloed */
+    0px 0px 24px rgba(0, 180, 255, 0.6); /* extra zachte gloed */
+}
+
+@keyframes firePulse {
+  0% {
+    text-shadow:
+      4px 4px 8px rgba(0,0,0,0.7),
+      0px 0px 10px rgba(255,120,0,0.6),
+      0px 0px 20px rgba(255,80,0,0.5);
+  }
+  50% {
+    text-shadow:
+      4px 4px 8px rgba(0,0,0,0.7),
+      0px 0px 18px rgba(255,140,0,0.9),
+      0px 0px 32px rgba(255,90,0,0.8);
+  }
+  100% {
+    text-shadow:
+      4px 4px 8px rgba(0,0,0,0.7),
+      0px 0px 10px rgba(255,120,0,0.6),
+      0px 0px 20px rgba(255,80,0,0.5);
+  }
+}
+
+@keyframes waterPulse {
+  0% {
+    text-shadow:
+      4px 4px 8px rgba(0,0,0,0.7),
+      0px 0px 10px rgba(0,180,255,0.6),
+      0px 0px 20px rgba(0,180,255,0.5);
+  }
+  50% {
+    text-shadow:
+      4px 4px 8px rgba(0,0,0,0.7),
+      0px 0px 18px rgba(0,200,255,0.9),
+      0px 0px 32px rgba(0,200,255,0.8);
+  }
+  100% {
+    text-shadow:
+      4px 4px 8px rgba(0,0,0,0.7),
+      0px 0px 10px rgba(0,180,255,0.6),
+      0px 0px 20px rgba(0,180,255,0.5);
+  }
+}
+
+#winter,
+#titeltekst{
+  font-size: 69px;
+  font-family: 'gametekst';
+  color: #464646;
+  text-shadow: 0px 2px 6px rgba(0,0,0,0.5);
+}
+/* einde titel stuk fireboy watergirl tekst */
+
+/* homepagina knoppen */
+#buttonmiddle{
+  display: flex;
+  justify-content: center;
+  margin-top: 75px;
+}
+#playbutton{
+  font-size: 80px;
+  font-family: 'gametekst';
+  color: #464646;
+  text-shadow: 0px 2px 6px rgba(0,0,0,0.5);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+#settings{
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+#settingsbutton{
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: #464646;
+  font-size: 55px;
+  cursor: pointer;
+}
+#settingsbutton:hover {
+  color: #222;
+  transform: rotate(20deg);
+}
+#settingsbutton {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+#question{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+#questionbutton {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: #464646;
+  font-size: 55px;
+  cursor: pointer;
+  transition: 
+    transform 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+#questionbutton:hover {
+  color: #222;
+  transform: scale(1.1);
+}
+
+#positievraag{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.popup {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  padding: 30px;
+  width: 70%;
+  height: 70%;
+
+  background-image: url("assets/img/levelmuur.png");
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 20px;
+  
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  font-family: 'gametekst';
+  font-size: 25px;
+  color:#464646;
+  text-align: center;
+}
+.popup .close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+#soundbutton,
+#musicbutton{
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: #464646;
+  font-size: 55px;
+  cursor: pointer;
+}
+#positiegeluid{
+  display: flex;
+  gap: 150px;
+}
+#settingsgeluid{
+  display:flex;
+  flex-direction: column;
+  gap: 100px;
+}
+#musicbutton.music-off::after {
+  content: "";
+  position: absolute;
+  width: 70%;
+  height: 4px;
+  background: #aa4444;
+
+  top: 50%;
+  left: 15%;
+  transform: rotate(-45deg);
+  border-radius: 2px;
+}
+/* einde popup settings en question knoppen */
+
+/* einde homepagina knoppen */
