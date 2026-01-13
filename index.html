@@ -1,14 +1,127 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://kit.fontawesome.com/0f7734b39c.js" crossorigin="anonymous"></script>
+
+    <link rel="icon" href="assets/favicon/favicon.webp" type="image/x-icon">
+
+    <link rel="icon" type="assets/favicon/favicon.webp" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="assets/favicon/favicon.webp" sizes="32x32" href="favicon-32x32.png">
+
     <title>Vuurmeisje en Watermeisje</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div id="achtergrond">
-        
+        <div id="titelboxboven">
+            <h1 id="fireboy">Firegirl</h1>
+            <h2 id="titeltekst">and</h2>
+            <h1 id="watergirl">Watergirl</h1>
+        </div>
+        <div id="titelboxbeneden">
+            <div id="winter">Winter Wonderland</div>
+        </div>
+
+        <div id="buttonmiddle">
+            <a href="levelscherm.html" id="playbutton">Play</a>
+        </div>
+
+        <div id="settings">
+            <button id="settingsbutton" onclick="openPopup('settingsPopup')">
+            <i class="fa-solid fa-gear"></i>
+            </button>
+        </div>
+
+        <div id="question">
+            <button id="questionbutton" onclick="openPopup('questionPopup')">
+            <i class="fa-solid fa-question"></i>
+            </button>
+        </div>
+
+        <div id="settingsPopup" class="popup-overlay">
+            <div class="popup">
+                <button class="close" onclick="closePopup()">✕</button>
+                <div id="settingsgeluid">
+                <h2>Settings</h2>
+
+                <div id="positiegeluid">
+                    <button id="musicbutton" class="music-on">
+                    <i class="fa-solid fa-music"></i>
+                    </button>
+
+                    <button id="soundbutton" class="sound-on">
+                    <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                </div>
+            </div>
+
+            </div>
+        </div>
+
+        <div id="questionPopup" class="popup-overlay">
+            <div class="popup">
+                <button class="close" onclick="closePopup()">✕</button>
+
+                    <div id="positievraag">
+                        <h2>How to play</h2>
+                        <p>Firegirl and Watergirl is a cooperative puzzle platform game where two characters must work together to complete each level. Firegirl can safely walk through fire and lava but must avoid water, while Watergirl can move through water but must stay away from fire. Both characters must avoid purple toxic liquid. The goal of each level is to collect all the diamonds and reach the exit doors by solving puzzles, activating switches, and helping each other overcome obstacles.</p>
+
+                        <h2>Controls</h2>
+                        Firegirl is controlled using the arrow keys on the keyboard, while Watergirl is controlled using the W, A, S, and D keys. Players must move, jump, and time their actions carefully to coordinate both characters at the same time. Good teamwork and precise control are essential to successfully complete the levels.
+                        </p>
+                    </div>
+            </div>
+        </div>
+
+
     </div>
 </body>
+
 </html>
+
+<script>
+  function openPopup(id) {
+    document.getElementById(id).style.display = "flex";
+  }
+
+  function closePopup() {
+    document.querySelectorAll('.popup-overlay')
+      .forEach(popup => popup.style.display = "none");
+  }
+  
+
+    const button = document.getElementById("musicbutton");
+
+  button.addEventListener("click", () => {
+    button.classList.toggle("music-off");
+    button.classList.toggle("music-on");
+  });
+
+
+
+    const soundButton = document.getElementById("soundbutton");
+
+  soundButton.addEventListener("click", () => {
+    const icon = soundButton.querySelector("i");
+
+    if (icon.classList.contains("fa-volume-high")) {
+      icon.classList.remove("fa-volume-high");
+      icon.classList.add("fa-volume-low");
+      soundButton.classList.add("sound-off");
+
+      // hier zet je straks loop-geluid uit
+      // walkSound.pause();
+    } else {
+      icon.classList.remove("fa-volume-low");
+      icon.classList.add("fa-volume-high");
+      soundButton.classList.remove("sound-off");
+
+      // walkSound.play();
+    }
+  });
+</script>
