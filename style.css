@@ -14,11 +14,19 @@ html, body {
     margin: 0;
 }
 
-body {
+/* body {
     background-image: url("assets/img/achtergrond.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat
+} */
+
+#bodyhomepagina{
+    background-image: url("assets/img/achtergrond.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
 }
 
 /* titel stuk fireboy watergirl tekst */
