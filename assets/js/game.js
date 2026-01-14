@@ -20,7 +20,7 @@ let WaterPlayer = {
 };
 
 const WaterPlayerImg = new Image();
-spelerImg.src = "src/assets/img/balkje.png";
+WaterPlayerImg.src = "assets/img/players/water-poppetje.png";
 
 // player fire
 let FirePlayerWidth = 40;
@@ -37,7 +37,7 @@ let FirePlayer = {
 };
 
 const FirePlayerImg = new Image();
-spelerImg.src = "src/assets/img/balkje.png";
+FirePlayerImg.src = "assets/img/players/vuur-poppetje.png";
 
 let PlayersSpeed = 2;
 
@@ -53,7 +53,7 @@ window.onload = function () {
     window.addEventListener("resize", resizeBoard);
 
     document.addEventListener("keydown", (e) => {
-        e.preventDefault();
+        if (["ArrowLeft", "ArrowRight", "ArrowUp", "KeyA", "KeyD", "KeyW", "Space"].includes(e.code)) e.preventDefault();
 
         // water
         if (e.code === "KeyA") WaterLeftPressed = true;
@@ -126,13 +126,25 @@ function update() {
         FirePlayer.onGround = false;
     }
 
-    // draw water
-    context.fillStyle = "blue";
-    context.fillRect(WaterPlayer.x, WaterPlayer.y, WaterPlayerWidth, WaterPlayerHeight);
+    // draw water player 
 
-    // draw fire
-    context.fillStyle = "red";
-    context.fillRect(FirePlayer.x, FirePlayer.y, FirePlayerWidth, FirePlayerHeight);
+    if (WaterPlayerImg.complete && WaterPlayerImg.naturalWidth > 0) {
+        context.drawImage(WaterPlayerImg, WaterPlayer.x, WaterPlayer.y, WaterPlayerWidth, WaterPlayerHeight);
+    } else {
+        // fallback als image nog niet geladen is
+        context.fillStyle = "blue";
+        context.fillRect(WaterPlayer.x, WaterPlayer.y, WaterPlayerWidth, WaterPlayerHeight);
+    }
+
+    // draw fire player
+
+    if (FirePlayerImg.complete && FirePlayerImg.naturalWidth > 0) {
+        context.drawImage(FirePlayerImg, FirePlayer.x, FirePlayer.y, FirePlayerWidth, FirePlayerHeight);
+    } else {
+        // fallback als image nog niet geladen is
+        context.fillStyle = "red";
+        context.fillRect(FirePlayer.x, FirePlayer.y, FirePlayerWidth, FirePlayerHeight);
+    }
 
     requestAnimationFrame(update);
 }
