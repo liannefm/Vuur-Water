@@ -14,13 +14,6 @@ html, body {
     margin: 0;
 }
 
-/* body {
-    background-image: url("assets/img/achtergrond.webp");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat
-} */
-
 #bodyhomepagina{
     background-image: url("assets/img/achtergrond.webp");
     background-size: cover;
@@ -254,5 +247,32 @@ html, body {
   border-radius: 2px;
 }
 /* einde popup settings en question knoppen */
-
 /* einde homepagina knoppen */
+
+/* level keuze pagina */
+#keuzelevelachtergrond{
+  background-image: url("assets/img/levelachtergrond.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 75%;
+}
+#lichtekeuzelevelachtergrond{
+  background-image: url("assets/img/lichtlevelachtergrond.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 25%;
+  border-top: 3px solid #000000;
+}
+
+#sneeuwvlokvak{
+  display: flex;
+  justify-content: center;
+}
+#sneeuwvlok{
+  height: 250px;
+  width: 335px;
+  position: fixed;
+  bottom: -50px;
+}
