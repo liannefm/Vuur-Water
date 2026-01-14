@@ -14,5 +14,5 @@
 
     <title>Vuurmeisje en Watermeisje</title>
     <link rel="stylesheet" href="style.css">
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/game.js"></script>
 </head>

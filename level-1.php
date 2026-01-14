@@ -3,7 +3,5 @@ include('assets/includes/header.php');
 ?>
 
 <body>
-    <div id="levelEenAchtergrond">
-
-    </div>
+    <canvas id="board"></canvas>
 </body>
