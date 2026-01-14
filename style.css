@@ -284,7 +284,10 @@ body {
   background-image: url("assets/img/levelmuur.png");
   background-size: cover;
   background-position: center;
-  background-color: rgba(255, 255, 255, 0.75);
+  background-repeat: no-repeat;
+  height: 100%;
 }
+
+
 
 /* eind lvl 1 */
