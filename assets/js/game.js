@@ -2,6 +2,9 @@
 let board;
 let context;
 
+const GRAVITY = 0.4;
+const JUMP_POWER = 10;
+
 // player water
 let WaterPlayerWidth = 40;
 let WaterPlayerHeight = 40;
@@ -11,8 +14,13 @@ let WaterRightPressed = false;
 
 let WaterPlayer = {
     x: 100,
-    y: 500
+    y: 500,
+    vy: 0,
+    onGround: false
 };
+
+const WaterPlayerImg = new Image();
+spelerImg.src = "src/assets/img/balkje.png";
 
 // player fire
 let FirePlayerWidth = 40;
@@ -23,81 +31,62 @@ let FireRightPressed = false;
 
 let FirePlayer = {
     x: 200,
-    y: 500
+    y: 500,
+    vy: 0,
+    onGround: false
 };
 
-//snelheid is pixels per frame
+const FirePlayerImg = new Image();
+spelerImg.src = "src/assets/img/balkje.png";
+
 let PlayersSpeed = 2;
 
-//achtergronds afbeelding
+// background
 const BackgroundImg = new Image();
 BackgroundImg.src = "assets/img/levelmuur.png";
 
 window.onload = function () {
     board = document.getElementById("board");
-    context = board.getContext("2d"); //word gebruikt om op het bord te tekenen.
+    context = board.getContext("2d");
 
     resizeBoard();
-
     window.addEventListener("resize", resizeBoard);
 
     document.addEventListener("keydown", (e) => {
         e.preventDefault();
 
-        // water controls
-        if (e.code === "KeyA") {
-            WaterLeftPressed = true;
+        // water
+        if (e.code === "KeyA") WaterLeftPressed = true;
+        if (e.code === "KeyD") WaterRightPressed = true;
+        if (e.code === "KeyW" && WaterPlayer.onGround) {
+            WaterPlayer.vy = -JUMP_POWER;
+            WaterPlayer.onGround = false;
         }
 
-        if (e.code === "KeyD") {
-            WaterRightPressed = true;
+        // fire
+        if (e.code === "ArrowLeft") FireLeftPressed = true;
+        if (e.code === "ArrowRight") FireRightPressed = true;
+        if (e.code === "ArrowUp" && FirePlayer.onGround) {
+            FirePlayer.vy = -JUMP_POWER;
+            FirePlayer.onGround = false;
         }
-
-        // fire controls
-        if (e.code === "ArrowLeft") {
-            FireLeftPressed = true;
-        }
-
-        if (e.code === "ArrowRight") {
-            FireRightPressed = true;
-        }
-
-
     });
 
     document.addEventListener("keyup", (e) => {
-        //water controls
         if (e.code === "KeyA") WaterLeftPressed = false;
         if (e.code === "KeyD") WaterRightPressed = false;
 
-        //fire controls
         if (e.code === "ArrowLeft") FireLeftPressed = false;
         if (e.code === "ArrowRight") FireRightPressed = false;
     });
 
     update();
-}
+};
 
 function update() {
     context.clearRect(0, 0, board.width, board.height);
 
-    // water moves per frame
-    if (WaterLeftPressed) {
-        WaterPlayer.x -= PlayersSpeed;
-    }
-    if (WaterRightPressed) {
-        WaterPlayer.x += PlayersSpeed;
-    }
-
-    // fire moves per frame
-    if (FireLeftPressed) {
-        FirePlayer.x -= PlayersSpeed;
-    }
-    if (FireRightPressed) {
-        FirePlayer.x += PlayersSpeed;
-    }
-
-    // draws background
+    // background
     if (BackgroundImg.complete && BackgroundImg.naturalWidth > 0) {
         context.drawImage(BackgroundImg, 0, 0, board.width, board.height);
     } else {
@@ -105,23 +94,45 @@ function update() {
         context.fillRect(0, 0, board.width, board.height);
     }
 
+    // water move
+    if (WaterLeftPressed) WaterPlayer.x -= PlayersSpeed;
+    if (WaterRightPressed) WaterPlayer.x += PlayersSpeed;
+
+    WaterPlayer.vy += GRAVITY;
+    WaterPlayer.y += WaterPlayer.vy;
+
+    const groundYWater = board.height - WaterPlayerHeight;
+    if (WaterPlayer.y >= groundYWater) {
+        WaterPlayer.y = groundYWater;
+        WaterPlayer.vy = 0;
+        WaterPlayer.onGround = true;
+    } else {
+        WaterPlayer.onGround = false;
+    }
+
+    // fire move
+    if (FireLeftPressed) FirePlayer.x -= PlayersSpeed;
+    if (FireRightPressed) FirePlayer.x += PlayersSpeed;
+
+    FirePlayer.vy += GRAVITY;
+    FirePlayer.y += FirePlayer.vy;
+
+    const groundYFire = board.height - FirePlayerHeight;
+    if (FirePlayer.y >= groundYFire) {
+        FirePlayer.y = groundYFire;
+        FirePlayer.vy = 0;
+        FirePlayer.onGround = true;
+    } else {
+        FirePlayer.onGround = false;
+    }
+
     // draw water
     context.fillStyle = "blue";
-    context.fillRect(
-        WaterPlayer.x,
-        WaterPlayer.y,
-        WaterPlayerWidth,
-        WaterPlayerHeight
-    );
+    context.fillRect(WaterPlayer.x, WaterPlayer.y, WaterPlayerWidth, WaterPlayerHeight);
 
     // draw fire
     context.fillStyle = "red";
-    context.fillRect(
-        FirePlayer.x,
-        FirePlayer.y,
-        FirePlayerWidth,
-        FirePlayerHeight
-    );
+    context.fillRect(FirePlayer.x, FirePlayer.y, FirePlayerWidth, FirePlayerHeight);
 
     requestAnimationFrame(update);
 }
@@ -129,7 +140,4 @@ function update() {
 function resizeBoard() {
     board.width = window.innerWidth;
     board.height = window.innerHeight;
-
-    BoardWidth = board.width;
-    BoardHeight = board.height;
 }
