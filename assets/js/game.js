@@ -6,8 +6,8 @@ const GRAVITY = 0.4;
 const JUMP_POWER = 10;
 
 // player water
-let WaterPlayerWidth = 40;
-let WaterPlayerHeight = 40;
+let WaterPlayerWidth = 60;
+let WaterPlayerHeight = 60;
 
 let WaterLeftPressed = false;
 let WaterRightPressed = false;
@@ -22,9 +22,23 @@ let WaterPlayer = {
 const WaterPlayerImg = new Image();
 WaterPlayerImg.src = "assets/img/players/water-poppetje.png";
 
+const WaterPlayerWalkingImg = new Image();
+WaterPlayerWalkingImg.src = "assets/img/players/water-lopend-1.png";
+
+const WaterPlayerWalking2Img = new Image();
+WaterPlayerWalking2Img.src = "assets/img/players/water-lopend-2.png";
+
+WaterPlayerImg.onload = () => {
+    const maxHeight = 100;
+    const scale = maxHeight / WaterPlayerImg.naturalHeight;
+
+    WaterPlayerWidth = WaterPlayerImg.naturalWidth * scale;
+    WaterPlayerHeight = maxHeight;
+};
+
 // player fire
-let FirePlayerWidth = 40;
-let FirePlayerHeight = 40;
+let FirePlayerWidth = 60;
+let FirePlayerHeight = 60;
 
 let FireLeftPressed = false;
 let FireRightPressed = false;
@@ -36,8 +50,31 @@ let FirePlayer = {
     onGround: false
 };
 
+// walking
+let waterWalkFrame = 0;
+let fireWalkFrame = 0;
+
+let walkFrameCounter = 0;
+const WALK_FRAME_SPEED = 14; // lager = sneller wisselen
+
+// imgs
 const FirePlayerImg = new Image();
 FirePlayerImg.src = "assets/img/players/vuur-poppetje.png";
+
+const FirePlayerWalkingImg = new Image();
+FirePlayerWalkingImg.src = "assets/img/players/vuur-lopend-1.png";
+
+const FirePlayerWalking2Img = new Image();
+FirePlayerWalking2Img.src = "assets/img/players/vuur-lopend-2.png";
+
+FirePlayerImg.onload = () => {
+    const maxHeight = 100;
+    const scale = maxHeight / FirePlayerImg.naturalHeight;
+
+    FirePlayerWidth = FirePlayerImg.naturalWidth * scale;
+    FirePlayerHeight = maxHeight;
+
+};
 
 let PlayersSpeed = 2;
 
@@ -86,6 +123,14 @@ window.onload = function () {
 function update() {
     context.clearRect(0, 0, board.width, board.height);
 
+    walkFrameCounter++;
+
+    if (walkFrameCounter >= WALK_FRAME_SPEED) {
+        walkFrameCounter = 0;
+        waterWalkFrame = (waterWalkFrame + 1) % 2;
+        fireWalkFrame = (fireWalkFrame + 1) % 2;
+    }
+
     // background
     if (BackgroundImg.complete && BackgroundImg.naturalWidth > 0) {
         context.drawImage(BackgroundImg, 0, 0, board.width, board.height);
@@ -95,9 +140,12 @@ function update() {
     }
 
     // water move
-    if (WaterLeftPressed) WaterPlayer.x -= PlayersSpeed;
-    if (WaterRightPressed) WaterPlayer.x += PlayersSpeed;
-
+    if (WaterLeftPressed) {
+        WaterPlayer.x -= PlayersSpeed;
+    }
+    if (WaterRightPressed) {
+        WaterPlayer.x += PlayersSpeed;
+    }
     WaterPlayer.vy += GRAVITY;
     WaterPlayer.y += WaterPlayer.vy;
 
@@ -111,8 +159,12 @@ function update() {
     }
 
     // fire move
-    if (FireLeftPressed) FirePlayer.x -= PlayersSpeed;
-    if (FireRightPressed) FirePlayer.x += PlayersSpeed;
+    if (FireLeftPressed) {
+        FirePlayer.x -= PlayersSpeed;
+    }
+    if (FireRightPressed) {
+        FirePlayer.x += PlayersSpeed;
+    }
 
     FirePlayer.vy += GRAVITY;
     FirePlayer.y += FirePlayer.vy;
@@ -127,23 +179,45 @@ function update() {
     }
 
     // draw water player 
+    let currentWaterImg = WaterPlayerImg;
 
-    if (WaterPlayerImg.complete && WaterPlayerImg.naturalWidth > 0) {
-        context.drawImage(WaterPlayerImg, WaterPlayer.x, WaterPlayer.y, WaterPlayerWidth, WaterPlayerHeight);
+    if (WaterLeftPressed || WaterRightPressed) {
+        currentWaterImg = waterWalkFrame === 0
+            ? WaterPlayerWalkingImg
+            : WaterPlayerWalking2Img;
+    }
+
+    if (WaterLeftPressed === true) {
+        context.drawImage(currentWaterImg, WaterPlayer.x, WaterPlayer.y, WaterPlayerWidth, WaterPlayerHeight);
+    } else if (WaterRightPressed === true) {
+        context.save();
+        context.translate(WaterPlayer.x + WaterPlayerWidth, WaterPlayer.y);
+        context.scale(-1, 1);
+        context.drawImage(currentWaterImg, 0, 0, WaterPlayerWidth, WaterPlayerHeight);
+        context.restore();
     } else {
-        // fallback als image nog niet geladen is
-        context.fillStyle = "blue";
-        context.fillRect(WaterPlayer.x, WaterPlayer.y, WaterPlayerWidth, WaterPlayerHeight);
+        context.drawImage(WaterPlayerImg, WaterPlayer.x, WaterPlayer.y, WaterPlayerWidth, WaterPlayerHeight);
     }
 
     // draw fire player
+    let currentFireImg = FirePlayerImg;
 
-    if (FirePlayerImg.complete && FirePlayerImg.naturalWidth > 0) {
-        context.drawImage(FirePlayerImg, FirePlayer.x, FirePlayer.y, FirePlayerWidth, FirePlayerHeight);
+    if (FireLeftPressed || FireRightPressed) {
+        currentFireImg = fireWalkFrame === 0
+            ? FirePlayerWalkingImg
+            : FirePlayerWalking2Img;
+    }
+
+    if (FireLeftPressed === true) {
+        context.save();
+        context.translate(FirePlayer.x + FirePlayerWidth, FirePlayer.y);
+        context.scale(-1, 1);
+        context.drawImage(currentFireImg, 0, 0, FirePlayerWidth, FirePlayerHeight);
+        context.restore();
+    } else if (FireRightPressed === true) {
+        context.drawImage(currentFireImg, FirePlayer.x, FirePlayer.y, FirePlayerWidth, FirePlayerHeight);
     } else {
-        // fallback als image nog niet geladen is
-        context.fillStyle = "red";
-        context.fillRect(FirePlayer.x, FirePlayer.y, FirePlayerWidth, FirePlayerHeight);
+        context.drawImage(FirePlayerImg, FirePlayer.x, FirePlayer.y, FirePlayerWidth, FirePlayerHeight);
     }
 
     requestAnimationFrame(update);
