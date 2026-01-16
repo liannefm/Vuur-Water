@@ -258,6 +258,8 @@ html, body {
   height: 74%;
   display: flex;
   justify-content: space-between;
+
+  position: relative;
 }
 #lichtekeuzelevelachtergrond{
   background-image: url("assets/img/lichtlevelachtergrond.png");
@@ -277,6 +279,18 @@ html, body {
   width: 335px;
   position: fixed;
   bottom: -50px;
+}
+
+#bovenbalk {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 #backbuttonbox{
@@ -299,4 +313,40 @@ html, body {
   color: #464646;
   margin-right: 15px;
   /* text-shadow: 0px 2px 6px rgba(0,0,0,0.5); */
+}
+
+#levelbutton{
+  display: flex;
+  width: 125px;
+  height: 125px;
+}
+
+#levelkeuze {
+  position: absolute;
+  bottom: 40px;
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.level {
+  width: 120px;
+  height: 120px;
+  background-image: url("assets/img/levelknop.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.level.extra {
+  transform: scale(1.1);
+}
+
+.level.main {
+  transform: scale(1.1);
 }
