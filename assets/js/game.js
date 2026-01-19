@@ -1,6 +1,5 @@
-// board
-let board;
-let context;
+import { board, context } from './config.js';
+import { boundaries } from './map.js';
 
 const GRAVITY = 0.4;
 const JUMP_POWER = 10;
@@ -83,9 +82,6 @@ const BackgroundImg = new Image();
 BackgroundImg.src = "assets/img/levelmuur.png";
 
 window.onload = function () {
-    board = document.getElementById("board");
-    context = board.getContext("2d");
-
     resizeBoard();
     window.addEventListener("resize", resizeBoard);
 
@@ -138,6 +134,10 @@ function update() {
         context.fillStyle = "black";
         context.fillRect(0, 0, board.width, board.height);
     }
+
+    boundaries.forEach((boundary) => {
+        boundary.draw();
+    });
 
     // water move
     if (WaterLeftPressed) {
