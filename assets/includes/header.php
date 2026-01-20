@@ -14,5 +14,7 @@
 
     <title>Vuurmeisje en Watermeisje</title>
     <link rel="stylesheet" href="style.css">
-    <script src="assets/js/main.js" type="module" defer></script>
+
+    <script src="assets/js/main.js" defer></script>
+
 </head>
