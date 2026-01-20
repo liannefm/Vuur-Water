@@ -109,18 +109,22 @@ class Player {
         this.position.y += this.velocity.y;
 
         for (const key in gameObjects) {
-            const block = gameObjects[key];
-            if (block.type !== 'block' && block.type !== 'lava') continue;
+            const object = gameObjects[key];
+            if (object.type !== 'block' && object.type !== 'poison') continue;
 
-            if (this.checkCollision(this, block)) {
+            if (this.checkCollision(this, object)) {
+                if (typeof object.onTouch === "function"){
+                    object.onTouch(this);
+                }
+
                 if (this.velocity.y > 0) {
-                    this.position.y = block.position.y - this.size.height;
+                    this.position.y = object.position.y - this.size.height;
                     this.velocity.y = 0;
                     this.onGround = true;
                 }
 
                 if (this.velocity.y < 0) {
-                    this.position.y = block.position.y + block.size.height;
+                    this.position.y = object.position.y + object.size.height;
                     this.velocity.y = 0;
                 }
             }
@@ -131,14 +135,14 @@ class Player {
         this.position.x += direction * PLAYER_SPEED;
 
         for (const key in gameObjects) {
-            const block = gameObjects[key];
-            if (block.type !== 'block' && block.type !== 'lava') continue;
+            const object = gameObjects[key];
 
-            if (this.checkCollision(this, block)) {
+            if (object.type !== 'block' && object.type !== 'poison') continue;
+            if (this.checkCollision(this, object)) {
                 if (direction > 0) {
-                    this.position.x = block.position.x - this.size.width;
+                    this.position.x = object.position.x - this.size.width;
                 } else if (direction < 0) {
-                    this.position.x = block.position.x + block.size.width;
+                    this.position.x = object.position.x + object.size.width;
                 }
             }
         }
