@@ -178,6 +178,90 @@
         viewport.scrollLeft = 0;
         viewport.scrollTop = world.offsetHeight;
 
+        /* ===== LOCAL STORAGE (NIEUW) ===== */
+        const STORAGE_KEY = "fgwm_last_level";
+
+        function saveToStorage(level) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(level));
+        }
+
+        function loadFromStorage() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return null;
+            try {
+                return JSON.parse(raw);
+            } catch {
+                return null;
+            }
+        }
+
+        /* ===== LEVEL TERUGTEKENEN (NIEUW) ===== */
+        function clearWorld() {
+            world.querySelectorAll(".block, .spawn").forEach(el => el.remove());
+            fireSpawn = null;
+            waterSpawn = null;
+            selected = null;
+        }
+
+        function createBlockFromData(data) {
+            const block = document.createElement("div");
+
+            // jouw game/map gebruikt soms "block", editor gebruikt class "wall"
+            const clsType = (data.type === "block") ? "wall" : data.type;
+
+            block.className = "block " + clsType;
+            block.style.width = data.width + "px";
+            block.style.height = data.height + "px";
+            block.style.left = data.x + "px";
+            block.style.bottom = data.y + "px";
+
+            addHandles(block);
+            world.appendChild(block);
+            return block;
+        }
+
+        function createSpawnFromData(type, data) {
+            if (type === "fire" && fireSpawn) fireSpawn.remove();
+            if (type === "water" && waterSpawn) waterSpawn.remove();
+
+            const spawn = document.createElement("div");
+            spawn.className = "spawn " + type;
+            spawn.style.left = data.x + "px";
+            spawn.style.bottom = data.y + "px";
+
+            spawn.addEventListener("mousedown", e => {
+                action = "move";
+                select(spawn);
+                startX = e.clientX;
+                startY = e.clientY;
+                startL = spawn.offsetLeft;
+                startB = parseInt(spawn.style.bottom);
+            });
+
+            spawn.addEventListener("click", e => {
+                e.stopPropagation();
+                select(spawn);
+            });
+
+            world.appendChild(spawn);
+
+            if (type === "fire") fireSpawn = spawn;
+            if (type === "water") waterSpawn = spawn;
+
+            return spawn;
+        }
+
+        function renderLevel(level) {
+            clearWorld();
+
+            if (level.fireSpawn) createSpawnFromData("fire", level.fireSpawn);
+            if (level.waterSpawn) createSpawnFromData("water", level.waterSpawn);
+
+            // editor maakt "blocks", maar sommige data kan "objects" heten
+            const list = level.blocks ?? level.objects ?? [];
+            list.forEach(b => createBlockFromData(b));
+        }
+
         /* ===== TYPE ===== */
         function setType(type) {
             currentType = type;
@@ -319,13 +403,13 @@
                 return;
             }
 
-            const blocks = [];
+            const objects = [];
 
             document.querySelectorAll(".block").forEach(b => {
                 let type = b.classList.contains("fire") ? "fire" :
                     b.classList.contains("water") ? "water" : "block";
 
-                blocks.push({
+                objects.push({
                     type,
                     x: b.offsetLeft,
                     y: parseInt(b.style.bottom),
@@ -343,13 +427,23 @@
                     x: waterSpawn.offsetLeft,
                     y: parseInt(waterSpawn.style.bottom)
                 },
-                blocks
+                objects
             };
 
             console.clear();
             console.log("LEVEL DATA:");
             console.log(JSON.stringify(level, null, 2));
+
+            // ✅ NIEUW: onthouden in localStorage
+            saveToStorage(level);
+            alert("Level opgeslagen ✅ (wordt onthouden bij refresh)");
         };
+
+        /* ===== AUTO LOAD (NIEUW) ===== */
+        const last = loadFromStorage();
+        if (last) {
+            renderLevel(last);
+        }
     </script>
 
 </body>
