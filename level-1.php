@@ -3,10 +3,17 @@ include('assets/includes/header.php');
 ?>
 
 <body>
-    <canvas id="board">
-        
+    <div id="game-container">
 
-    </canvas>
+        <div id="timer-wrapper">
+            <img src="assets/img/timer.png" id="timer" alt="Timer">
+            <span id="timer-text">00:00</span>
+        </div>
+
+
+
+        <canvas id="board"></canvas>
+    </div>
 
     <audio id="backgroundMusic" loop>
         <source src="./assets/sounds/backgroundmusic.mp3" type="audio/mpeg">

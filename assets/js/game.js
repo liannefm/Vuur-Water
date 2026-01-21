@@ -2,7 +2,6 @@ import { board, context } from './config.js';
 import { loadPlayers, updatePlayers } from './players.js';
 import { loadGameObjects, updateGameObjects } from './objects.js';
 
-
 // export let gameState = {
 //     isGameOver: false
 // };
@@ -52,32 +51,32 @@ window.addEventListener('gameover', () => {
     document.getElementById('gameoverPopup').style.display = 'flex';
 });
 
+window.onload = function () {
+    loadPlayers();
+    loadGameObjects();
 
-function gameLoop() {
-    if (gameState.isGameOver) {
-        document.getElementById('gameoverPopup').style.display = 'flex';
-        return;
-    }
-    requestAnimationFrame(gameLoop);
-}
+    resizeBoard();
+    window.addEventListener("resize", resizeBoard);
 
-gameLoop();
+    // TIMER
+    const timerText = document.getElementById("timer-text");
+    let startTime = Date.now();
 
-document.getElementById('restartLevel').addEventListener('click', () => {
-    location.reload();
-});
+    setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
 
-document.getElementById('backToLevels').addEventListener('click', () => {
-    window.location.href = 'levelkeuze.php';
-});
+        timerText.textContent =
+            `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    }, 1000);
 
-document.getElementById('closeGameOver').addEventListener('click', () => {
-    document.getElementById('gameoverPopup').style.display = 'none';
-});
+    update();
+};
 
 
-// tijdelijk
-setTimeout(() => {
-    document.getElementById('gameoverPopup').style.display = 'flex';
-}, 1000);
+// console.log("timer script bereikt");
 
+// setInterval(() => {
+//     console.log("timer interval loopt");
+// }, 1000);
