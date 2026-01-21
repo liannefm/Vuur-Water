@@ -4,44 +4,62 @@ function openPopup(id) {
 
 function closePopup() {
   document.querySelectorAll('.popup-overlay')
-  .forEach(popup => popup.style.display = "none");
+    .forEach(popup => popup.style.display = "none");
 }
 
-
-
 const audioElement = document.querySelector('#backgroundMusic');
-const button = document.getElementById("musicbutton");
+const musicButton = document.getElementById("musicbutton");
+const soundButton = document.getElementById("soundbutton");
 
-button.addEventListener("click", () => {
-  button.classList.toggle("music-off");
-  button.classList.toggle("music-on");
+/* ===== STATUS BIJ LADEN ===== */
+const savedMusicState = localStorage.getItem("musicState");
+const savedVolume = localStorage.getItem("musicVolume");
 
-  if (button.classList.contains('music-on')) {
+// Volume herstellen
+if (savedVolume !== null) {
+  audioElement.volume = savedVolume;
+}
+
+// Muziek aan/uit herstellen
+if (savedMusicState === "off") {
+  audioElement.pause();
+  musicButton.classList.add("music-off");
+  musicButton.classList.remove("music-on");
+} else {
+  // default = aan
+  audioElement.play();
+  musicButton.classList.add("music-on");
+  musicButton.classList.remove("music-off");
+}
+
+/* ===== MUZIEK AAN/UIT ===== */
+musicButton.addEventListener("click", () => {
+  if (audioElement.paused) {
     audioElement.play();
-  }else if (button.classList.contains('music-off')){
+    musicButton.classList.add("music-on");
+    musicButton.classList.remove("music-off");
+    localStorage.setItem("musicState", "on");
+  } else {
     audioElement.pause();
+    musicButton.classList.add("music-off");
+    musicButton.classList.remove("music-on");
+    localStorage.setItem("musicState", "off");
   }
 });
 
-const soundButton = document.getElementById("soundbutton");
-
+/* ===== VOLUME ZACHT / HARD ===== */
 soundButton.addEventListener("click", () => {
   const icon = soundButton.querySelector("i");
 
   if (icon.classList.contains("fa-volume-high")) {
-    icon.classList.remove("fa-volume-high");
-    icon.classList.add("fa-volume-low");
+    icon.classList.replace("fa-volume-high", "fa-volume-low");
     soundButton.classList.add("sound-off");
     audioElement.volume = 0.3;
-
-    // hier komt straks loop geluid uit
-    // walkSound.pause();
+    localStorage.setItem("musicVolume", 0.3);
   } else {
-    icon.classList.remove("fa-volume-low");
-    icon.classList.add("fa-volume-high");
+    icon.classList.replace("fa-volume-low", "fa-volume-high");
     soundButton.classList.remove("sound-off");
     audioElement.volume = 1.0;
-
-    // walkSound.play();
+    localStorage.setItem("musicVolume", 1.0);
   }
 });
