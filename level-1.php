@@ -10,8 +10,6 @@ include('assets/includes/header.php');
             <span id="timer-text">00:00</span>
         </div>
 
-
-
         <canvas id="board"></canvas>
     </div>
 
