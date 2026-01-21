@@ -27,7 +27,9 @@ export class Poison {
     onTouch(player) {
         const playerType = player.type;
         
-        if(this.poisonType == 'poison' || (this.poisonType == 'fire' && playerType == 'water') || (this.poisonType == 'water' && playerType == 'fire')){
+        if(this.poisonType == 'poison' || 
+        (this.poisonType == 'fire' && playerType == 'water') || 
+        (this.poisonType == 'water' && playerType == 'fire')){
             console.log("DOOOOOOD");
         }
     }

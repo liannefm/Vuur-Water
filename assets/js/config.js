@@ -3,7 +3,7 @@ export const context = board.getContext("2d");
 
 export const PLAYER_MAX_HEIGHT = 100;
 
-export const PLAYER_SPEED = 2;
+export const PLAYER_SPEED = 3;
 export const WALK_FRAME_SPEED = 14; // lager = sneller wisselen
 export const GRAVITY = 0.4;
 export const JUMP_POWER = 10;
