@@ -1,29 +1,45 @@
 import { context } from "./config.js";
 
-export const mapData =
-{
+export const mapData = {
     "fireSpawn": {
-        "x": 60,
-        "y": 91
+        "x": 13,
+        "y": 55
     },
     "waterSpawn": {
-        "x": 122,
-        "y": 94
+        "x": 65,
+        "y": 55
     },
     "objects": [
         {
             "type": "block",
-            "x": 0,
-            "y": 0,
-            "width": 2249,
-            "height": 90
+            "x": -1,
+            "y": -9,
+            "width": 1000,
+            "height": 60
         },
         {
-            "type": "block",
-            "x": 0,
-            "y": 0,
-            "width": 24,
-            "height": 1324
-        }
+            "type": "poison",
+            "poisonType": "poison",
+            "x": 1000,
+            "y": 1,
+            "width": 150,
+            "height": 50
+        },
+        {
+            "type": "poison",
+            "poisonType": "fire",
+            "x": 1150,
+            "y": 1,
+            "width": 150,
+            "height": 50
+        },
+        {
+            "type": "poison",
+            "poisonType": "water",
+            "x": 1300,
+            "y": 1,
+            "width": 150,
+            "height": 50
+        },
     ]
 }

@@ -17,7 +17,7 @@
                 <h2>Settings</h2>
 
                 <div id="positiegeluid">
-                    <button id="musicbutton" class="music-on">
+                    <button id="musicbutton" class="music-off">
                     <i class="fa-solid fa-music"></i>
                     </button>
 

@@ -3,7 +3,7 @@ export const context = board.getContext("2d");
 
 export const PLAYER_MAX_HEIGHT = 100;
 
-export const PLAYER_SPEED = 2;
+export const PLAYER_SPEED = 3;
 export const WALK_FRAME_SPEED = 14; // lager = sneller wisselen
 export const GRAVITY = 0.4;
 export const JUMP_POWER = 10;
@@ -38,13 +38,29 @@ export const PLAYER_CONFIGS = {
     }
 }
 
-export const LAVA_CONFIGS = {
-    frame_speed: 10,
+export const POISON_CONFIGS = {
+    frame_speed: 12.5,
+
+    poison: [
+        'assets/img/poison/poison-frame-1.png',
+        'assets/img/poison/poison-frame-2.png',
+        'assets/img/poison/poison-frame-3.png',
+        'assets/img/poison/poison-frame-4.png'
+    ],
+
+    fire: [
+        'assets/img/poison/fire-frame-1.png',
+        'assets/img/poison/fire-frame-2.png',
+        'assets/img/poison/fire-frame-3.png',
+        'assets/img/poison/fire-frame-4.png',
+        'assets/img/poison/fire-frame-5.png'
+    ],
 
     water: [
-        'assets/img/lava/water-lava-frame-1.png',
-        'assets/img/lava/water-lava-frame-2.png',
-        'assets/img/lava/water-lava-frame-3.png',
-        'assets/img/lava/water-lava-frame-4.png'
+        'assets/img/poison/water-frame-1.png',
+        'assets/img/poison/water-frame-2.png',
+        'assets/img/poison/water-frame-3.png',
+        'assets/img/poison/water-frame-4.png',
+        'assets/img/poison/water-frame-5.png'
     ],
 }

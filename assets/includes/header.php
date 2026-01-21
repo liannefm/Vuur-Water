@@ -15,3 +15,7 @@
     <title>Vuurmeisje en Watermeisje</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
+<audio id="backgroundMusic" autoplay loop>
+    <source src="./assets/sounds/backgroundmusic.mp3" type="audio/mpeg">
+</audio>
