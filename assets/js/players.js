@@ -92,6 +92,30 @@ class Player {
 
     }
 
+    checkTouch(a, b) {
+        return (
+            a.position.x <= b.position.x + b.size.width &&
+            a.position.x + a.size.width >= b.position.x &&
+            a.position.y <= b.position.y + b.size.height &&
+            a.position.y + a.size.height >= b.position.y
+        );
+    }
+
+
+    applyTouch() {
+        for (const key in gameObjects) {
+            const object = gameObjects[key];
+            const touchCheck = this.checkTouch(this, object);
+
+            if (touchCheck == true && typeof object.onTouch === "function") {
+                object.onTouch(this);
+            } else if (touchCheck == false && typeof object.touch === "boolean" && object.touch === true && typeof object.onRelease === "function") {
+                object.onRelease(this);
+            }
+
+        }
+    }
+
     checkCollision(a, b) {
         return (
             a.position.x < b.position.x + b.size.width &&
@@ -110,13 +134,10 @@ class Player {
 
         for (const key in gameObjects) {
             const object = gameObjects[key];
+
             if (object.type !== 'block' && object.type !== 'poison') continue;
 
             if (this.checkCollision(this, object)) {
-                if (typeof object.onTouch === "function"){
-                    object.onTouch(this);
-                }
-
                 if (this.velocity.y > 0) {
                     this.position.y = object.position.y - this.size.height;
                     this.velocity.y = 0;
@@ -128,11 +149,14 @@ class Player {
                     this.velocity.y = 0;
                 }
             }
+
         }
     }
 
     moveX(direction) {
         this.position.x += direction * PLAYER_SPEED;
+
+        this.applyTouch();
 
         for (const key in gameObjects) {
             const object = gameObjects[key];

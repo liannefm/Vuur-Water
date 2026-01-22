@@ -2,6 +2,7 @@ import { mapData } from './map.js';
 
 import { Block } from './objects/block.js';
 import { Poison } from './objects/poison.js';
+import { Door } from './objects/door.js';
 
 
 export const gameObjects = [];
@@ -25,6 +26,18 @@ export function loadGameObjects() {
         }else if (objectType === 'poison') {
             gameObjects.push(new Poison({
                 poisonType: object['poisonType'],
+                position: {
+                    x: object['x'],
+                    y: object['y']
+                },
+                size: {
+                    width: object['width'],
+                    height: object['height']
+                }
+            }));
+        }else if (objectType === 'door') {
+            gameObjects.push(new Door({
+                doorType: object['doorType'],
                 position: {
                     x: object['x'],
                     y: object['y']

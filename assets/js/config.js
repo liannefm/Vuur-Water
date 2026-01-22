@@ -64,3 +64,9 @@ export const POISON_CONFIGS = {
         'assets/img/poison/water-frame-5.png'
     ],
 }
+
+export const DOOR_CONFIGS = {
+    opendoor: 'assets/img/doors/opendoor.png',
+    waterdoor: 'assets/img/doors/waterdoor.png',
+    firedoor: 'assets/img/doors/firedoor.png'
+}

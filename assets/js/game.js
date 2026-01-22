@@ -29,12 +29,13 @@ function update() {
         context.drawImage(BackgroundImg, 0, 0, board.width, board.height);
     }
 
-    // players
-    updatePlayers();
-
+    
     // objects
     updateGameObjects();
-
+    
+    // players
+    updatePlayers();
+    
     requestAnimationFrame(update);
 }
 

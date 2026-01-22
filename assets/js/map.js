@@ -41,5 +41,21 @@ export const mapData = {
             "width": 150,
             "height": 50
         },
+        {
+            "type": "door",
+            "doorType": "waterdoor",
+            "x": 800,
+            "y": 40,
+            "width": 121,
+            "height": 144,
+        },
+        {
+            "type": "door",
+            "doorType": "firedoor",
+            "x": 679,
+            "y": 40,
+            "width": 121,
+            "height": 144,
+        }
     ]
 }
