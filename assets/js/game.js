@@ -1,6 +1,6 @@
 import { board, context } from './config.js';
 import { loadPlayers, updatePlayers } from './players.js';
-import { loadGameObjects, updateGameObjects } from './objectsManager.js';
+import { loadGameObjects, updateGameObjects } from './objects.js';
 
 export let gameOver = false;
 

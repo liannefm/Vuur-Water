@@ -1,7 +1,7 @@
 import { context } from './config.js';
 import { PLAYER_CONFIGS, PLAYER_SPEED, WALK_FRAME_SPEED, JUMP_POWER, GRAVITY, PLAYER_MAX_HEIGHT } from './config.js';
 import { mapData } from './map.js';
-import { gameObjects } from './objectsManager.js';
+import { gameObjects } from './objects.js';
 import { gameOver } from './game.js';
 
 export const players = {};
