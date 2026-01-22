@@ -33,6 +33,31 @@ include('assets/includes/header.php');
         </div>
     </div>
 
+    <div id="pausePopup" class="popup-overlay">
+        <div class="popup-content">
+            <h2>Paused</h2>
+            <p>
+                Press <strong>R</strong> to restart<br>
+                Press <strong>M</strong> to return to the level menu<br>
+                Press <strong>Space</strong> to continue
+            </p>
+            <button class="popup-button" id="resumeBtn">Resume Game</button>
+            <button class="popup-button" id="restartBtn">Restart Level</button>
+            <button class="popup-button" onclick="goToLevelScreen()">Back to Level Menu</button>
+        </div>
+    </div>
+
+    <div id="gameOverPopup" class="popup-overlay">
+        <div class="popup-content">
+            <h2>Game Over</h2>
+            <p>Press <strong>R</strong> to restart<br>
+                Press <strong>M</strong> to return to the level menu
+            </p>
+            <button class="popup-button" onclick="restartGame()">Restart Level</button>
+            <button class="popup-button" onclick="goToLevelScreen()">Back to Level Menu</button>
+        </div>
+    </div>
+
     <script src="assets/js/game.js" type="module"></script>
 </body>
 

@@ -114,7 +114,7 @@ class Player {
 
             if (touchCheck == true && typeof object.onTouch === "function") {
                 object.onTouch(this);
-            } else if (touchCheck == false && typeof object.touch === "boolean" && object.touch === true && typeof object.onRelease === "function") {
+            } else if (touchCheck == false && typeof object.onRelease === "function") {
                 object.onRelease(this);
             }
 
