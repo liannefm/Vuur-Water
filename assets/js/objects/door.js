@@ -1,7 +1,8 @@
 import { context, DOOR_CONFIGS } from '../config.js';
 
 export class Door {
-    constructor({ doorType, position, size }) {
+    constructor({ id, doorType, position, size }) {
+        this.id = id;
         this.type = 'door';
         this.doorType = doorType;
         this.touch = false;

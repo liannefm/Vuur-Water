@@ -1,7 +1,7 @@
 import { Block } from './objects/block.js';
 import { Poison } from './objects/poison.js';
-
 import { Door } from './objects/door.js';
+import { Button } from './objects/button.js';
 
 export const doors = [];
 
@@ -17,12 +17,14 @@ export function loadGameObjects() {
     for (const obj of mapData.objects) {
         if (obj.type === "block") {
             gameObjects.push(new Block({
+                id: obj.id,
                 position: { x: obj.x, y: obj.y },
                 size: { width: obj.width, height: obj.height }
             }));
         }
         else if (obj.type === "poison") {
             gameObjects.push(new Poison({
+                id: obj.id,
                 poisonType: obj.poisonType,
                 position: { x: obj.x, y: obj.y },
                 size: { width: obj.width, height: obj.height }
@@ -30,6 +32,7 @@ export function loadGameObjects() {
         }
         else if (obj.type === "door") {
             const door = new Door({
+                id: obj.id,
                 doorType: obj.doorType,
                 position: { x: obj.x, y: obj.y },
                 size: { width: obj.width, height: obj.height }
@@ -37,6 +40,16 @@ export function loadGameObjects() {
 
             gameObjects.push(door);
             doors.push(door);
+        }
+        else if (obj.type === "button") {
+            gameObjects.push(new Button({
+                id: obj.id,
+                color: obj.color,
+                targetID: obj.targetID,
+                newTargetPos: obj.newTargetPos,
+                position: { x: obj.x, y: obj.y },
+                size: { width: obj.width, height: obj.height }
+            }));
         }
     }
 }

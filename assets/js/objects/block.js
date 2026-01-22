@@ -1,7 +1,8 @@
 import { context } from '../config.js';
 
 export class Block {
-    constructor({ position, size }) {
+    constructor({ id, position, size }) {
+        this.id = id;
         this.type = 'block';
 
         this.position = {

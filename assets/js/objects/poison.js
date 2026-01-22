@@ -2,7 +2,8 @@ import { context, POISON_CONFIGS } from '../config.js';
 import { setGameOver } from '../game.js';
 
 export class Poison {
-    constructor({ poisonType, position, size }) {
+    constructor({ id, poisonType, position, size }) {
+        this.id = id;
         this.type = 'poison';
         this.poisonType = poisonType;
 

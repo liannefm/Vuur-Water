@@ -70,3 +70,12 @@ export const DOOR_CONFIGS = {
     waterdoor: 'assets/img/doors/waterdoor.png',
     firedoor: 'assets/img/doors/firedoor.png'
 }
+
+export const BUTTON_CONFIGS = {
+    blue: 'assets/img/buttons/blue.png',
+    green: 'assets/img/buttons/green.png',
+    orange: 'assets/img/buttons/orange.png',
+    purple: 'assets/img/buttons/purple.png',
+    white: 'assets/img/buttons/white.png',
+    yellow: 'assets/img/buttons/yellow.png'
+}
