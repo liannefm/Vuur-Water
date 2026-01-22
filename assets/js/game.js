@@ -1,11 +1,7 @@
 import { board, context } from './config.js';
 import { loadPlayers, updatePlayers } from './players.js';
 import { loadGameObjects, updateGameObjects } from './objects.js';
-
-// export let gameState = {
-//     isGameOver: false
-// };
-
+import { getDoors } from './objects.js';
 
 // background
 const BackgroundImg = new Image();
@@ -29,14 +25,24 @@ function update() {
         context.drawImage(BackgroundImg, 0, 0, board.width, board.height);
     }
 
-    
-    // objects
     updateGameObjects();
-    
-    // players
     updatePlayers();
     
     requestAnimationFrame(update);
+
+
+
+const doors = getDoors();
+
+if (!gamePaused && doors.length >= 2) {
+    const allDoorsOpen = doors.every(door => door.isOpen());
+
+    if (allDoorsOpen) {
+        gamePaused = true;
+        showLevelCompletePopup();
+    }
+}
+
 }
 
 function resizeBoard() {
@@ -75,9 +81,14 @@ window.onload = function () {
     update();
 };
 
+let levelCompleted = false;
 
-// console.log("timer script bereikt");
+window.showLevelCompletePopup = function () {
+    document
+        .getElementById('levelCompletePopup')
+        .classList.add('active');
+};
 
-// setInterval(() => {
-//     console.log("timer interval loopt");
-// }, 1000);
+window.goToLevelScreen = function () {
+    window.location.href = 'levelscherm.php';
+};

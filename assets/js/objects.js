@@ -4,6 +4,7 @@ import { Block } from './objects/block.js';
 import { Poison } from './objects/poison.js';
 import { Door } from './objects/door.js';
 
+export const doors = [];
 
 export const gameObjects = [];
 
@@ -23,7 +24,7 @@ export function loadGameObjects() {
                     height: object['height']
                 }
             }));
-        }else if (objectType === 'poison') {
+        } else if (objectType === 'poison') {
             gameObjects.push(new Poison({
                 poisonType: object['poisonType'],
                 position: {
@@ -35,8 +36,8 @@ export function loadGameObjects() {
                     height: object['height']
                 }
             }));
-        }else if (objectType === 'door') {
-            gameObjects.push(new Door({
+        } else if (objectType === 'door') {
+            const door = new Door({
                 doorType: object['doorType'],
                 position: {
                     x: object['x'],
@@ -46,7 +47,10 @@ export function loadGameObjects() {
                     width: object['width'],
                     height: object['height']
                 }
-            }));
+            });
+
+            gameObjects.push(door);
+            doors.push(door);
         }
     }
 }
@@ -59,3 +63,6 @@ export function updateGameObjects() {
 }
 
 
+export function getDoors() {
+    return doors;
+}

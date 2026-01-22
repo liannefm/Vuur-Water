@@ -49,6 +49,11 @@ export class Door {
         }
     }
 
+    isOpen() {
+    return this.position.y - this.doorPosition.y >= 100;
+    }
+
+
     draw() {
         if(this.touch && this.position.y - this.doorPosition.y <= 100){
             this.doorPosition.y -= 1;
