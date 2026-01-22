@@ -1,4 +1,5 @@
 import { context, POISON_CONFIGS } from '../config.js';
+import { setGameOver } from '../game.js';
 
 export class Poison {
     constructor({ poisonType, position, size }) {
@@ -12,7 +13,7 @@ export class Poison {
             img.src = src;
             this.images.push(img);
         }
-        
+
         this.currentFrame = 0;
         this.frameCounter = 0;
 
@@ -26,11 +27,12 @@ export class Poison {
 
     onTouch(player) {
         const playerType = player.type;
-        
-        if(this.poisonType == 'poison' || 
-        (this.poisonType == 'fire' && playerType == 'water') || 
-        (this.poisonType == 'water' && playerType == 'fire')){
+
+        if (this.poisonType == 'poison' ||
+            (this.poisonType == 'fire' && playerType == 'water') ||
+            (this.poisonType == 'water' && playerType == 'fire')) {
             console.log("DOOOOOOD");
+            setGameOver(true);
         }
     }
 
@@ -39,7 +41,7 @@ export class Poison {
         if (image.complete && image.naturalWidth > 0) {
             context.drawImage(image, this.position.x, this.position.y, this.size.width, this.size.height);
         }
-        
+
         this.frameCounter++;
         if (this.frameCounter >= POISON_CONFIGS.frame_speed) {
             this.currentFrame = (this.currentFrame + 1) % this.images.length;

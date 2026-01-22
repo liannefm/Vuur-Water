@@ -2,6 +2,7 @@ import { context } from './config.js';
 import { PLAYER_CONFIGS, PLAYER_SPEED, WALK_FRAME_SPEED, JUMP_POWER, GRAVITY, PLAYER_MAX_HEIGHT } from './config.js';
 import { mapData } from './map.js';
 import { gameObjects } from './objects.js';
+import { gameOver } from './game.js';
 
 export const players = {};
 
@@ -132,8 +133,13 @@ class Player {
 
     applyGravity() {
         this.velocity.y += GRAVITY;
-        this.onGround = false;
 
+        const MAX_FALL_SPEED = 3; // lager = minder snel vallen
+        if (this.velocity.y > MAX_FALL_SPEED) {
+            this.velocity.y = MAX_FALL_SPEED;
+        }
+
+        this.onGround = false;
         this.position.y += this.velocity.y;
 
         for (const key in gameObjects) {
@@ -142,6 +148,11 @@ class Player {
             if (object.type !== 'block' && object.type !== 'poison') continue;
 
             if (this.checkCollision(this, object)) {
+
+                if (typeof object.onTouch === "function") {
+                    object.onTouch(this);
+                }
+
                 if (this.velocity.y > 0) {
                     this.position.y = object.position.y - this.size.height;
                     this.velocity.y = 0;
@@ -178,6 +189,8 @@ class Player {
 
 
     update() {
+        if (gameOver) return;
+
         this.walk.frameCounter++;
         if (this.walk.frameCounter >= WALK_FRAME_SPEED) {
             this.walk.frameCounter = 0;

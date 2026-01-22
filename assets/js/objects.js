@@ -1,40 +1,32 @@
-import { mapData } from './map.js';
-
 import { Block } from './objects/block.js';
 import { Poison } from './objects/poison.js';
+
 import { Door } from './objects/door.js';
 
 export const doors = [];
 
+import { mapData } from './map.js';
+
+
 export const gameObjects = [];
 
 export function loadGameObjects() {
-    for (const key in mapData['objects']) {
-        const object = mapData['objects'][key];
-        const objectType = object['type'];
+    gameObjects.length = 0;
 
-        if (objectType === 'block') {
+    for (const obj of mapData.objects) {
+        if (obj.type === "block") {
             gameObjects.push(new Block({
-                position: {
-                    x: object['x'],
-                    y: object['y']
-                },
-                size: {
-                    width: object['width'],
-                    height: object['height']
-                }
+                position: { x: obj.x, y: obj.y },
+                size: { width: obj.width, height: obj.height }
             }));
-        } else if (objectType === 'poison') {
+
+
+        if (obj.type === "poison") {
+
             gameObjects.push(new Poison({
-                poisonType: object['poisonType'],
-                position: {
-                    x: object['x'],
-                    y: object['y']
-                },
-                size: {
-                    width: object['width'],
-                    height: object['height']
-                }
+                poisonType: obj.poisonType,
+                position: { x: obj.x, y: obj.y },
+                size: { width: obj.width, height: obj.height }
             }));
         } else if (objectType === 'door') {
             const door = new Door({
@@ -56,13 +48,12 @@ export function loadGameObjects() {
 }
 
 export function updateGameObjects() {
-    for (const key in gameObjects) {
-        const gameObject = gameObjects[key];
-        gameObject.draw();
-    }
+    for (const obj of gameObjects) obj.draw();
 }
+
 
 
 export function getDoors() {
     return doors;
 }
+

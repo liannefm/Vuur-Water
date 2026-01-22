@@ -33,7 +33,6 @@ include('assets/includes/header.php');
     </div>
 </div>
 
-    
     <script src="assets/js/game.js" type="module"></script>
 </body>
 
