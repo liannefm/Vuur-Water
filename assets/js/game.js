@@ -48,38 +48,38 @@ function drawGameOverScreen() {
 
     updateGameObjects();
     updatePlayers();
-    
+
     requestAnimationFrame(update);
 
 
 
-const doors = getDoors();
+    const doors = getDoors();
 
-if (!gamePaused && doors.length >= 2) {
-    const allDoorsOpen = doors.every(door => door.isOpen());
+    if (!gamePaused && doors.length >= 2) {
+        const allDoorsOpen = doors.every(door => door.isOpen());
 
-    if (allDoorsOpen) {
-        gamePaused = true;
-        showLevelCompletePopup();
+        if (allDoorsOpen) {
+            gamePaused = true;
+            showLevelCompletePopup();
+        }
     }
-}
 
 }
 
-    // tekst
-    context.fillStyle = "white";
-    context.textAlign = "center";
+// tekst
+context.fillStyle = "white";
+context.textAlign = "center";
 
-    context.font = "bold 64px Arial";
-    context.fillText("Game Over", board.width / 2, board.height / 2 - 40);
+context.font = "bold 64px Arial";
+context.fillText("Game Over", board.width / 2, board.height / 2 - 40);
 
-    context.font = "24px Arial";
-    context.fillText("Press R to restart", board.width / 2, board.height / 2 + 20);
-    context.fillText("Press M to return to the level menu", board.width / 2, board.height / 2 + 80);
+context.font = "24px Arial";
+context.fillText("Press R to restart", board.width / 2, board.height / 2 + 20);
+context.fillText("Press M to return to the level menu", board.width / 2, board.height / 2 + 80);
 
 
-    context.restore();
-}
+context.restore();
+
 
 window.addEventListener("keydown", (e) => {
     if (gameOver && e.code === "KeyR") {

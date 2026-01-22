@@ -20,33 +20,34 @@ export function loadGameObjects() {
                 size: { width: obj.width, height: obj.height }
             }));
 
+            if (obj.type === "poison") {
 
-        if (obj.type === "poison") {
+                gameObjects.push(new Poison({
+                    poisonType: obj.poisonType,
+                    position: { x: obj.x, y: obj.y },
+                    size: { width: obj.width, height: obj.height }
+                }));
+            }
 
-            gameObjects.push(new Poison({
-                poisonType: obj.poisonType,
-                position: { x: obj.x, y: obj.y },
-                size: { width: obj.width, height: obj.height }
-            }));
-        } else if (objectType === 'door') {
-            const door = new Door({
-                doorType: object['doorType'],
-                position: {
-                    x: object['x'],
-                    y: object['y']
-                },
-                size: {
-                    width: object['width'],
-                    height: object['height']
-                }
-            });
+            if (objectType === 'door') {
+                const door = new Door({
+                    doorType: object['doorType'],
+                    position: {
+                        x: object['x'],
+                        y: object['y']
+                    },
+                    size: {
+                        width: object['width'],
+                        height: object['height']
+                    }
+                });
 
-            gameObjects.push(door);
-            doors.push(door);
+                gameObjects.push(door);
+                doors.push(door);
+            }
         }
     }
 }
-
 export function updateGameObjects() {
     for (const obj of gameObjects) obj.draw();
 }
