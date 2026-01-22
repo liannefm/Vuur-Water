@@ -24,7 +24,8 @@ class Player {
 
         this.presseds = {
             left: false,
-            right: false
+            right: false,
+            jump: false
         }
 
         this.images = {}
@@ -47,9 +48,8 @@ class Player {
                 this.presseds.right = true;
             }
 
-            if (event.code === playerConfig.keys.jump && this.onGround) {
-                this.velocity.y = -JUMP_POWER;
-                this.onGround = false;
+            if (event.code === playerConfig.keys.jump) {
+                this.presseds.jump = true;
             }
         });
 
@@ -62,6 +62,10 @@ class Player {
 
             if (event.code === playerConfig.keys.right) {
                 this.presseds.right = false;
+            }
+
+            if (event.code === playerConfig.keys.jump) {
+                this.presseds.jump = false;
             }
         });
     }
@@ -185,6 +189,10 @@ class Player {
         }
         if (this.presseds.right) {
             this.moveX(1);
+        }
+
+        if (this.presseds.jump && this.onGround) {
+            this.velocity.y = -JUMP_POWER;
         }
 
         this.applyGravity();

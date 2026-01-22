@@ -4,12 +4,16 @@ include('assets/includes/header.php');
 
 <body>
     <div id="game-container">
-
+        
+        
         <div id="timer-wrapper">
             <img src="assets/img/timer.png" id="timer" alt="Timer">
             <span id="timer-text">00:00</span>
         </div>
-
+        
+        <button id="pausebutton">
+            <i class="fa-solid fa-pause"></i>
+        </button>
         <canvas id="board"></canvas>
     </div>
 
