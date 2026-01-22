@@ -29,7 +29,7 @@ export function loadGameObjects() {
                 }));
             }
 
-            if (objectType === 'door') {
+            if (obj.type === 'door') {
                 const door = new Door({
                     doorType: object['doorType'],
                     position: {

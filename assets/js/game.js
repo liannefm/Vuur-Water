@@ -4,7 +4,6 @@ import { loadGameObjects, updateGameObjects } from './objects.js';
 
 import { getDoors } from './objects.js';
 
-
 export let gameOver = false;
 
 let gameLoopId = null;
@@ -36,68 +35,6 @@ function startGame() {
     window.removeEventListener("resize", resizeBoard);
     window.addEventListener("resize", resizeBoard);
 
-    update();
-}
-
-function drawGameOverScreen() {
-    context.save();
-
-    // donkere overlay
-    context.fillStyle = "rgba(0,0,0,0.65)";
-    context.fillRect(0, 0, board.width, board.height);
-
-    updateGameObjects();
-    updatePlayers();
-
-    requestAnimationFrame(update);
-
-
-
-    const doors = getDoors();
-
-    if (!gamePaused && doors.length >= 2) {
-        const allDoorsOpen = doors.every(door => door.isOpen());
-
-        if (allDoorsOpen) {
-            gamePaused = true;
-            showLevelCompletePopup();
-        }
-    }
-
-}
-
-// tekst
-context.fillStyle = "white";
-context.textAlign = "center";
-
-context.font = "bold 64px Arial";
-context.fillText("Game Over", board.width / 2, board.height / 2 - 40);
-
-context.font = "24px Arial";
-context.fillText("Press R to restart", board.width / 2, board.height / 2 + 20);
-context.fillText("Press M to return to the level menu", board.width / 2, board.height / 2 + 80);
-
-
-context.restore();
-
-
-window.addEventListener("keydown", (e) => {
-    if (gameOver && e.code === "KeyR") {
-        startGame(); // restart
-    }
-
-    if (gameOver && e.code === "KeyM") {
-        window.location.href = "levelscherm.php";
-    }
-});
-
-window.onload = function () {
-    loadPlayers();
-    loadGameObjects();
-
-    resizeBoard();
-    window.addEventListener("resize", resizeBoard);
-
     // TIMER
     const timerText = document.getElementById("timer-text");
     let startTime = Date.now();
@@ -112,7 +49,51 @@ window.onload = function () {
     }, 1000);
 
     update();
-};
+}
+
+function drawGameOverScreen() {
+    context.save();
+
+    // donkere overlay
+    context.fillStyle = "rgba(0,0,0,0.65)";
+    context.fillRect(0, 0, board.width, board.height);
+
+    // tekst
+    context.fillStyle = "white";
+    context.textAlign = "center";
+
+    context.font = "bold 64px Arial";
+    context.fillText("Game Over", board.width / 2, board.height / 2 - 40);
+
+    context.font = "24px Arial";
+    context.fillText("Press R to restart", board.width / 2, board.height / 2 + 20);
+    context.fillText("Press M to return to the level menu", board.width / 2, board.height / 2 + 80);
+
+    context.restore();
+
+    const doors = getDoors();
+
+    if (!gamePaused && doors.length >= 2) {
+        const allDoorsOpen = doors.every(door => door.isOpen());
+
+        if (allDoorsOpen) {
+            gamePaused = true;
+            showLevelCompletePopup();
+        }
+    }
+
+}
+
+window.addEventListener("keydown", (e) => {
+    if (gameOver && e.code === "KeyR") {
+        startGame(); // restart
+    }
+
+    if (gameOver && e.code === "KeyM") {
+        window.location.href = "levelscherm.php";
+    }
+});
+
 
 let levelCompleted = false;
 
