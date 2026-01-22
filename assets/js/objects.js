@@ -12,6 +12,7 @@ export const gameObjects = [];
 
 export function loadGameObjects() {
     gameObjects.length = 0;
+    doors.length = 0; // <-- belangrijk bij restart
 
     for (const obj of mapData.objects) {
         if (obj.type === "block") {
@@ -19,32 +20,23 @@ export function loadGameObjects() {
                 position: { x: obj.x, y: obj.y },
                 size: { width: obj.width, height: obj.height }
             }));
+        }
+        else if (obj.type === "poison") {
+            gameObjects.push(new Poison({
+                poisonType: obj.poisonType,
+                position: { x: obj.x, y: obj.y },
+                size: { width: obj.width, height: obj.height }
+            }));
+        }
+        else if (obj.type === "door") {
+            const door = new Door({
+                doorType: obj.doorType,
+                position: { x: obj.x, y: obj.y },
+                size: { width: obj.width, height: obj.height }
+            });
 
-            if (obj.type === "poison") {
-
-                gameObjects.push(new Poison({
-                    poisonType: obj.poisonType,
-                    position: { x: obj.x, y: obj.y },
-                    size: { width: obj.width, height: obj.height }
-                }));
-            }
-
-            if (obj.type === 'door') {
-                const door = new Door({
-                    doorType: object['doorType'],
-                    position: {
-                        x: object['x'],
-                        y: object['y']
-                    },
-                    size: {
-                        width: object['width'],
-                        height: object['height']
-                    }
-                });
-
-                gameObjects.push(door);
-                doors.push(door);
-            }
+            gameObjects.push(door);
+            doors.push(door);
         }
     }
 }

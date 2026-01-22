@@ -8,11 +8,20 @@ export let gameOver = false;
 
 let gameLoopId = null;
 
+let gamePaused = false;
+
+// timer
+let timerInterval = null;
+let startTime = 0;
+
 export function setGameOver(value) {
     gameOver = value;
-}
 
-let gamePaused = false;
+    if (value && timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+}
 
 // background
 const BackgroundImg = new Image();
@@ -30,16 +39,20 @@ function startGame() {
 
     loadPlayers();
     loadGameObjects();
-
     resizeBoard();
+
     window.removeEventListener("resize", resizeBoard);
     window.addEventListener("resize", resizeBoard);
 
     // TIMER
     const timerText = document.getElementById("timer-text");
-    let startTime = Date.now();
 
-    setInterval(() => {
+    if (timerInterval) clearInterval(timerInterval);
+
+    timerText.textContent = "00:00";
+    startTime = Date.now();
+
+    timerInterval = setInterval(() => {
         const elapsed = Math.floor((Date.now() - startTime) / 1000);
         const minutes = Math.floor(elapsed / 60);
         const seconds = elapsed % 60;
@@ -70,18 +83,19 @@ function drawGameOverScreen() {
     context.fillText("Press M to return to the level menu", board.width / 2, board.height / 2 + 80);
 
     context.restore();
+}
 
+function checkLevelComplete() {
     const doors = getDoors();
+    if (gamePaused) return;
+    if (doors.length < 2) return;
 
-    if (!gamePaused && doors.length >= 2) {
-        const allDoorsOpen = doors.every(door => door.isOpen());
+    const allDoorsOpen = doors.every(door => door.isOpen());
 
-        if (allDoorsOpen) {
-            gamePaused = true;
-            showLevelCompletePopup();
-        }
+    if (allDoorsOpen) {
+        gamePaused = true;
+        window.showLevelCompletePopup();
     }
-
 }
 
 window.addEventListener("keydown", (e) => {
@@ -95,7 +109,7 @@ window.addEventListener("keydown", (e) => {
 });
 
 
-let levelCompleted = false;
+// let levelCompleted = false;
 
 window.showLevelCompletePopup = function () {
     document
@@ -118,8 +132,9 @@ function update() {
     }
 
     if (!gamePaused) {
-        updatePlayers();
         updateGameObjects();
+        updatePlayers();
+        checkLevelComplete();
     }
 
     gameLoopId = requestAnimationFrame(update);
