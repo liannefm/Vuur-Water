@@ -16,6 +16,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<audio id="backgroundMusic" autoplay loop>
-    <source src="./assets/sounds/backgroundmusic.mp3" type="audio/mpeg">
+<audio id="backgroundMusic" loop>
+  <source src="./assets/sounds/backgroundmusic.mp3" type="audio/mpeg">
 </audio>

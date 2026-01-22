@@ -1,3 +1,5 @@
+console.log("SCRIPT LOADED");
+
 function openPopup(id) {
   document.getElementById(id).style.display = "flex";
 }
@@ -7,59 +9,66 @@ function closePopup() {
     .forEach(popup => popup.style.display = "none");
 }
 
-const audioElement = document.querySelector('#backgroundMusic');
+/* ===== AUDIO ===== */
+const audioElement = document.getElementById("backgroundMusic");
 const musicButton = document.getElementById("musicbutton");
 const soundButton = document.getElementById("soundbutton");
 
-/* ===== STATUS BIJ LADEN ===== */
-const savedMusicState = localStorage.getItem("musicState");
-const savedVolume = localStorage.getItem("musicVolume");
+/* ===== MUZIEKSTATUS BIJ LADEN ===== */
+if (audioElement) {
+  const musicState = localStorage.getItem("musicState");
+  const musicVolume = localStorage.getItem("musicVolume");
 
-// Volume herstellen
-if (savedVolume !== null) {
-  audioElement.volume = savedVolume;
-}
+  if (musicVolume !== null) {
+    audioElement.volume = musicVolume;
+  }
 
-// Muziek aan/uit herstellen
-if (savedMusicState === "off") {
-  audioElement.pause();
-  musicButton.classList.add("music-off");
-  musicButton.classList.remove("music-on");
-} else {
-  // default = aan
-  audioElement.play();
-  musicButton.classList.add("music-on");
-  musicButton.classList.remove("music-off");
-}
-
-/* ===== MUZIEK AAN/UIT ===== */
-musicButton.addEventListener("click", () => {
-  if (audioElement.paused) {
-    audioElement.play();
-    musicButton.classList.add("music-on");
-    musicButton.classList.remove("music-off");
-    localStorage.setItem("musicState", "on");
+  // standaard: muziek AAN
+  if (musicState !== "off") {
+    audioElement.play().catch(() => {});
   } else {
     audioElement.pause();
+  }
+}
+
+/* ===== MUZIEK AAN / UIT KNOP ===== */
+if (musicButton && audioElement) {
+  // juiste start-klasse
+  if (localStorage.getItem("musicState") === "off") {
     musicButton.classList.add("music-off");
-    musicButton.classList.remove("music-on");
-    localStorage.setItem("musicState", "off");
-  }
-});
-
-/* ===== VOLUME ZACHT / HARD ===== */
-soundButton.addEventListener("click", () => {
-  const icon = soundButton.querySelector("i");
-
-  if (icon.classList.contains("fa-volume-high")) {
-    icon.classList.replace("fa-volume-high", "fa-volume-low");
-    soundButton.classList.add("sound-off");
-    audioElement.volume = 0.3;
-    localStorage.setItem("musicVolume", 0.3);
   } else {
-    icon.classList.replace("fa-volume-low", "fa-volume-high");
-    soundButton.classList.remove("sound-off");
-    audioElement.volume = 1.0;
-    localStorage.setItem("musicVolume", 1.0);
+    musicButton.classList.add("music-on");
   }
-});
+
+  musicButton.addEventListener("click", () => {
+    if (audioElement.paused) {
+      audioElement.play();
+      localStorage.setItem("musicState", "on");
+      musicButton.classList.remove("music-off");
+      musicButton.classList.add("music-on");
+    } else {
+      audioElement.pause();
+      localStorage.setItem("musicState", "off");
+      musicButton.classList.remove("music-on");
+      musicButton.classList.add("music-off");
+    }
+  });
+}
+
+/* ===== VOLUME KNOP ===== */
+if (soundButton && audioElement) {
+  soundButton.addEventListener("click", () => {
+    const icon = soundButton.querySelector("i");
+
+    if (icon.classList.contains("fa-volume-high")) {
+      icon.classList.replace("fa-volume-high", "fa-volume-low");
+      audioElement.volume = 0.3;
+      localStorage.setItem("musicVolume", 0.3);
+    } else {
+      icon.classList.replace("fa-volume-low", "fa-volume-high");
+      audioElement.volume = 1.0;
+      localStorage.setItem("musicVolume", 1.0);
+    }
+  });
+}
+

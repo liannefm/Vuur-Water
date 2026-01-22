@@ -2,6 +2,9 @@ import { board, context } from './config.js';
 import { loadPlayers, updatePlayers } from './players.js';
 import { loadGameObjects, updateGameObjects } from './objects.js';
 
+import { getDoors } from './objects.js';
+
+
 export let gameOver = false;
 
 let gameLoopId = null;
@@ -43,6 +46,26 @@ function drawGameOverScreen() {
     context.fillStyle = "rgba(0,0,0,0.65)";
     context.fillRect(0, 0, board.width, board.height);
 
+    updateGameObjects();
+    updatePlayers();
+    
+    requestAnimationFrame(update);
+
+
+
+const doors = getDoors();
+
+if (!gamePaused && doors.length >= 2) {
+    const allDoorsOpen = doors.every(door => door.isOpen());
+
+    if (allDoorsOpen) {
+        gamePaused = true;
+        showLevelCompletePopup();
+    }
+}
+
+}
+
     // tekst
     context.fillStyle = "white";
     context.textAlign = "center";
@@ -53,6 +76,7 @@ function drawGameOverScreen() {
     context.font = "24px Arial";
     context.fillText("Press R to restart", board.width / 2, board.height / 2 + 20);
     context.fillText("Press M to return to the level menu", board.width / 2, board.height / 2 + 80);
+
 
     context.restore();
 }
@@ -66,6 +90,37 @@ window.addEventListener("keydown", (e) => {
         window.location.href = "levelscherm.php";
     }
 });
+
+window.onload = function () {
+    loadPlayers();
+    loadGameObjects();
+
+    resizeBoard();
+    window.addEventListener("resize", resizeBoard);
+
+    // TIMER
+    const timerText = document.getElementById("timer-text");
+    let startTime = Date.now();
+
+    setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+
+        timerText.textContent =
+            `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    }, 1000);
+
+    update();
+};
+
+let levelCompleted = false;
+
+window.showLevelCompletePopup = function () {
+    document
+        .getElementById('levelCompletePopup')
+        .classList.add('active');
+};
 
 function update() {
     context.clearRect(0, 0, board.width, board.height);
@@ -94,3 +149,7 @@ function resizeBoard() {
     board.height = window.innerHeight;
 }
 
+
+window.goToLevelScreen = function () {
+    window.location.href = 'levelscherm.php';
+};
