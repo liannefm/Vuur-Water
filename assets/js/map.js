@@ -199,7 +199,7 @@ export const mapData = {
             {
                 "id": 1769124640906,
                 "type": "block",
-                "x": 863,
+                "x": 864,
                 "y": 641,
                 "width": 212,
                 "height": 49
@@ -207,9 +207,9 @@ export const mapData = {
             {
                 "id": 1769124664389,
                 "type": "block",
-                "x": 1221,
-                "y": 640,
-                "width": 72,
+                "x": 1224,
+                "y": 643,
+                "width": 68,
                 "height": 47
             },
             {
@@ -396,298 +396,298 @@ export const mapData = {
     },
 
     "2": {
-  "fireSpawn": {
-    "x": 1403,
-    "y": 1443
-  },
-  "waterSpawn": {
-    "x": 66,
-    "y": 1443
-  },
-  "objects": [
-    {
-      "id": 1769157775449,
-      "type": "block",
-      "x": 1,
-      "y": -1,
-      "width": 1546,
-      "height": 60
-    },
-    {
-      "id": 1769157812981,
-      "type": "block",
-      "x": -1,
-      "y": 60,
-      "width": 51,
-      "height": 792
-    },
-    {
-      "id": 1769157856107,
-      "type": "door",
-      "x": 59,
-      "y": 48,
-      "width": 121,
-      "height": 144,
-      "doorType": "firedoor"
-    },
-    {
-      "id": 1769157867581,
-      "type": "door",
-      "x": 1344,
-      "y": 49,
-      "width": 121,
-      "height": 144,
-      "doorType": "waterdoor"
-    },
-    {
-      "id": 1769157908189,
-      "type": "triangle",
-      "x": 567,
-      "y": 950,
-      "width": 60,
-      "height": 56,
-      "triangleType": "left"
-    },
-    {
-      "id": 1769157930029,
-      "type": "block",
-      "x": 1485,
-      "y": 60,
-      "width": 60,
-      "height": 793
-    },
-    {
-      "id": 1769157989138,
-      "type": "triangle",
-      "x": 901,
-      "y": 958,
-      "width": 60,
-      "height": 52,
-      "triangleType": "right"
-    },
-    {
-      "id": 1769158448579,
-      "type": "block",
-      "x": -14,
-      "y": 852,
-      "width": 60,
-      "height": 851
-    },
-    {
-      "id": 1769158479511,
-      "type": "block",
-      "x": 1485,
-      "y": 853,
-      "width": 58,
-      "height": 847
-    },
-    {
-      "id": 1769158537883,
-      "type": "block",
-      "x": 155,
-      "y": 598,
-      "width": 590,
-      "height": 51
-    },
-    {
-      "id": 1769158558944,
-      "type": "block",
-      "x": 778,
-      "y": 598,
-      "width": 574,
-      "height": 52
-    },
-    {
-      "id": 1769158653093,
-      "type": "block",
-      "x": 739,
-      "y": 599,
-      "width": 60,
-      "height": 1101
-    },
-    {
-      "id": 1769158790453,
-      "type": "poison",
-      "x": 354,
-      "y": 602,
-      "width": 150,
-      "height": 50,
-      "poisonType": "fire"
-    },
-    {
-      "id": 1769158822943,
-      "type": "poison",
-      "x": 1003,
-      "y": 600,
-      "width": 150,
-      "height": 50,
-      "poisonType": "water"
-    },
-    {
-      "id": 1769158871320,
-      "type": "block",
-      "x": 47,
-      "y": 420,
-      "width": 651,
-      "height": 29
-    },
-    {
-      "id": 1769158898117,
-      "type": "block",
-      "x": 850,
-      "y": 421,
-      "width": 637,
-      "height": 29
-    },
-    {
-      "id": 1769158973397,
-      "type": "block",
-      "x": 152,
-      "y": 249,
-      "width": 1217,
-      "height": 60
-    },
-    {
-      "id": 1769158990198,
-      "type": "poison",
-      "x": 353,
-      "y": 259,
-      "width": 150,
-      "height": 50,
-      "poisonType": "fire"
-    },
-    {
-      "id": 1769158995373,
-      "type": "poison",
-      "x": 1001,
-      "y": 259,
-      "width": 150,
-      "height": 50,
-      "poisonType": "water"
-    },
-    {
-      "id": 1769159161622,
-      "type": "poison",
-      "x": 576,
-      "y": 13,
-      "width": 427,
-      "height": 50,
-      "poisonType": "poison"
-    },
-    {
-      "id": 1769159281821,
-      "type": "poison",
-      "x": 87,
-      "y": 953,
-      "width": 435,
-      "height": 50,
-      "poisonType": "poison"
-    },
-    {
-      "id": 1769159323873,
-      "type": "poison",
-      "x": 1004,
-      "y": 959,
-      "width": 435,
-      "height": 50,
-      "poisonType": "poison"
-    },
-    {
-      "id": 1769159366325,
-      "type": "block",
-      "x": 45,
-      "y": 1414,
-      "width": 98,
-      "height": 30
-    },
-    {
-      "id": 1769159393280,
-      "type": "block",
-      "x": 1370,
-      "y": 1407,
-      "width": 117,
-      "height": 33
-    },
-    {
-      "id": 1769159393551,
-      "type": "block",
-      "x": 445,
-      "y": 1234,
-      "width": 38,
-      "height": 30
-    },
-    {
-      "id": 1769159393671,
-      "type": "block",
-      "x": 258,
-      "y": 1319,
-      "width": 37,
-      "height": 32
-    },
-    {
-      "id": 1769159459621,
-      "type": "block",
-      "x": 1194,
-      "y": 1318,
-      "width": 40,
-      "height": 34
-    },
-    {
-      "id": 1769159460055,
-      "type": "block",
-      "x": 1016,
-      "y": 1238,
-      "width": 37,
-      "height": 35
-    },
-    {
-      "id": 1769159605905,
-      "type": "block",
-      "x": 961,
-      "y": 958,
-      "width": 47,
-      "height": 51
-    },
-    {
-      "id": 1769159608238,
-      "type": "block",
-      "x": 1441,
-      "y": 957,
-      "width": 45,
-      "height": 51
-    },
-    {
-      "id": 1769159627341,
-      "type": "block",
-      "x": 519,
-      "y": 949,
-      "width": 49,
-      "height": 50
-    },
-    {
-      "id": 1769159627641,
-      "type": "block",
-      "x": 26,
-      "y": 949,
-      "width": 63,
-      "height": 52
-    },
-    {
-      "id": 1769160203746,
-      "type": "block",
-      "x": 46,
-      "y": 931,
-      "width": 576,
-      "height": 20
-    },
-    {
-      "id": 1769160227477,
-      "type": "block",
-      "x": 900,
-      "y": 936,
-      "width": 584,
-      "height": 20
+        "fireSpawn": {
+            "x": 1403,
+            "y": 1443
+        },
+        "waterSpawn": {
+            "x": 66,
+            "y": 1443
+        },
+        "objects": [
+            {
+                "id": 1769157775449,
+                "type": "block",
+                "x": 1,
+                "y": -1,
+                "width": 1546,
+                "height": 60
+            },
+            {
+                "id": 1769157812981,
+                "type": "block",
+                "x": -1,
+                "y": 60,
+                "width": 51,
+                "height": 792
+            },
+            {
+                "id": 1769157856107,
+                "type": "door",
+                "x": 59,
+                "y": 48,
+                "width": 121,
+                "height": 144,
+                "doorType": "firedoor"
+            },
+            {
+                "id": 1769157867581,
+                "type": "door",
+                "x": 1344,
+                "y": 49,
+                "width": 121,
+                "height": 144,
+                "doorType": "waterdoor"
+            },
+            {
+                "id": 1769157908189,
+                "type": "triangle",
+                "x": 567,
+                "y": 950,
+                "width": 60,
+                "height": 56,
+                "triangleType": "left"
+            },
+            {
+                "id": 1769157930029,
+                "type": "block",
+                "x": 1485,
+                "y": 60,
+                "width": 60,
+                "height": 793
+            },
+            {
+                "id": 1769157989138,
+                "type": "triangle",
+                "x": 901,
+                "y": 958,
+                "width": 60,
+                "height": 52,
+                "triangleType": "right"
+            },
+            {
+                "id": 1769158448579,
+                "type": "block",
+                "x": -14,
+                "y": 852,
+                "width": 60,
+                "height": 851
+            },
+            {
+                "id": 1769158479511,
+                "type": "block",
+                "x": 1485,
+                "y": 853,
+                "width": 58,
+                "height": 847
+            },
+            {
+                "id": 1769158537883,
+                "type": "block",
+                "x": 155,
+                "y": 598,
+                "width": 590,
+                "height": 51
+            },
+            {
+                "id": 1769158558944,
+                "type": "block",
+                "x": 778,
+                "y": 598,
+                "width": 574,
+                "height": 52
+            },
+            {
+                "id": 1769158653093,
+                "type": "block",
+                "x": 739,
+                "y": 599,
+                "width": 60,
+                "height": 1101
+            },
+            {
+                "id": 1769158790453,
+                "type": "poison",
+                "x": 354,
+                "y": 602,
+                "width": 150,
+                "height": 50,
+                "poisonType": "fire"
+            },
+            {
+                "id": 1769158822943,
+                "type": "poison",
+                "x": 1003,
+                "y": 600,
+                "width": 150,
+                "height": 50,
+                "poisonType": "water"
+            },
+            {
+                "id": 1769158871320,
+                "type": "block",
+                "x": 47,
+                "y": 420,
+                "width": 651,
+                "height": 29
+            },
+            {
+                "id": 1769158898117,
+                "type": "block",
+                "x": 850,
+                "y": 421,
+                "width": 637,
+                "height": 29
+            },
+            {
+                "id": 1769158973397,
+                "type": "block",
+                "x": 152,
+                "y": 249,
+                "width": 1217,
+                "height": 60
+            },
+            {
+                "id": 1769158990198,
+                "type": "poison",
+                "x": 353,
+                "y": 259,
+                "width": 150,
+                "height": 50,
+                "poisonType": "fire"
+            },
+            {
+                "id": 1769158995373,
+                "type": "poison",
+                "x": 1001,
+                "y": 259,
+                "width": 150,
+                "height": 50,
+                "poisonType": "water"
+            },
+            {
+                "id": 1769159161622,
+                "type": "poison",
+                "x": 576,
+                "y": 13,
+                "width": 427,
+                "height": 50,
+                "poisonType": "poison"
+            },
+            {
+                "id": 1769159281821,
+                "type": "poison",
+                "x": 87,
+                "y": 953,
+                "width": 435,
+                "height": 50,
+                "poisonType": "poison"
+            },
+            {
+                "id": 1769159323873,
+                "type": "poison",
+                "x": 1004,
+                "y": 959,
+                "width": 435,
+                "height": 50,
+                "poisonType": "poison"
+            },
+            {
+                "id": 1769159366325,
+                "type": "block",
+                "x": 45,
+                "y": 1414,
+                "width": 98,
+                "height": 30
+            },
+            {
+                "id": 1769159393280,
+                "type": "block",
+                "x": 1370,
+                "y": 1407,
+                "width": 117,
+                "height": 33
+            },
+            {
+                "id": 1769159393551,
+                "type": "block",
+                "x": 445,
+                "y": 1234,
+                "width": 38,
+                "height": 30
+            },
+            {
+                "id": 1769159393671,
+                "type": "block",
+                "x": 258,
+                "y": 1319,
+                "width": 37,
+                "height": 32
+            },
+            {
+                "id": 1769159459621,
+                "type": "block",
+                "x": 1194,
+                "y": 1318,
+                "width": 40,
+                "height": 34
+            },
+            {
+                "id": 1769159460055,
+                "type": "block",
+                "x": 1016,
+                "y": 1238,
+                "width": 37,
+                "height": 35
+            },
+            {
+                "id": 1769159605905,
+                "type": "block",
+                "x": 961,
+                "y": 958,
+                "width": 47,
+                "height": 51
+            },
+            {
+                "id": 1769159608238,
+                "type": "block",
+                "x": 1441,
+                "y": 957,
+                "width": 45,
+                "height": 51
+            },
+            {
+                "id": 1769159627341,
+                "type": "block",
+                "x": 519,
+                "y": 949,
+                "width": 49,
+                "height": 50
+            },
+            {
+                "id": 1769159627641,
+                "type": "block",
+                "x": 26,
+                "y": 949,
+                "width": 63,
+                "height": 52
+            },
+            {
+                "id": 1769160203746,
+                "type": "block",
+                "x": 46,
+                "y": 931,
+                "width": 576,
+                "height": 20
+            },
+            {
+                "id": 1769160227477,
+                "type": "block",
+                "x": 900,
+                "y": 936,
+                "width": 584,
+                "height": 20
+            }
+        ]
     }
-  ]
-}
 }
