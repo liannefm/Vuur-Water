@@ -288,7 +288,7 @@ export const mapData = {
         {
             "id": 1769125370381,
             "type": "block",
-            "x": 202,
+            "x": 204,
             "y": 1043,
             "width": 119,
             "height": 27
@@ -320,8 +320,8 @@ export const mapData = {
         {
             "id": 1769125548790,
             "type": "block",
-            "x": 25,
-            "y": 752,
+            "x": 21,
+            "y": 750,
             "width": 54,
             "height": 60
         },
