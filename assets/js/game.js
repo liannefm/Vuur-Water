@@ -1,12 +1,10 @@
-import { board, context } from './config.js';
-import { loadPlayers, updatePlayers } from './players.js';
-import { loadGameObjects, updateGameObjects } from './objects.js';
-import { players } from './players.js';
-import { gameObjects } from './objects.js';
-import { camera } from './config.js';
+import { board, context, camera } from './config.js';
+import { loadPlayers, updatePlayers, players } from './players.js';
+import { loadGameObjects, updateGameObjects, gameObjects, getDoors } from './objects.js';
+import { mapData } from './map.js';
 
-import { getDoors } from './objects.js';
-
+const params = new URLSearchParams(window.location.search);
+export const level = params.get("level");
 
 export let gameOver = false;
 
@@ -118,6 +116,7 @@ window.onload = function () {
 };
 
 function startGame() {
+    if (mapData[level] == undefined) return;
     if (gameLoopId !== null) cancelAnimationFrame(gameLoopId);
 
     gameOver = false;

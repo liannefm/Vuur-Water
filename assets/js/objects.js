@@ -7,6 +7,7 @@ import { Triangle } from './objects/triangle.js';
 export const doors = [];
 
 import { mapData } from './map.js';
+import { level } from "./game.js";
 
 
 export const gameObjects = [];
@@ -15,7 +16,7 @@ export function loadGameObjects() {
     gameObjects.length = 0;
     doors.length = 0; // <-- belangrijk bij restart
 
-    for (const obj of mapData.objects) {
+    for (const obj of mapData[level].objects) {
         if (obj.type === "block") {
             gameObjects.push(new Block({
                 id: obj.id,

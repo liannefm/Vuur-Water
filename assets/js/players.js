@@ -2,7 +2,7 @@ import { context } from './config.js';
 import { PLAYER_CONFIGS, PLAYER_SPEED, WALK_FRAME_SPEED, JUMP_POWER, GRAVITY, PLAYER_MAX_HEIGHT } from './config.js';
 import { mapData } from './map.js';
 import { gameObjects } from './objects.js';
-import { gameOver } from './game.js';
+import { level, gameOver } from './game.js';
 
 export const players = {};
 const MAX_STEP_HEIGHT = 30; // hoeveel pixels hij automatisch omhoog mag stappen
@@ -312,16 +312,16 @@ export function loadPlayers() {
     players.water = new Player({
         type: 'water',
         position: {
-            x: mapData.waterSpawn.x,
-            y: window.innerHeight - mapData.waterSpawn.y // Andersom omdat y=0 bovenaan is
+            x: mapData[level].waterSpawn.x,
+            y: window.innerHeight - mapData[level].waterSpawn.y // Andersom omdat y=0 bovenaan is
         }
     });
 
     players.fire = new Player({
         type: 'fire',
         position: {
-            x: mapData.fireSpawn.x,
-            y: window.innerHeight - mapData.fireSpawn.y // Andersom omdat y=0 bovenaan is
+            x: mapData[level].fireSpawn.x,
+            y: window.innerHeight - mapData[level].fireSpawn.y // Andersom omdat y=0 bovenaan is
         }
     });
 }
