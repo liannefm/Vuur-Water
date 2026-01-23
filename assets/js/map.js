@@ -569,7 +569,7 @@ export const mapData = {
       "id": 1769159161622,
       "type": "poison",
       "x": 576,
-      "y": 8,
+      "y": 13,
       "width": 427,
       "height": 50,
       "poisonType": "poison"
