@@ -172,17 +172,6 @@ function drawGameOverScreen() {
     context.fillStyle = "rgba(0,0,0,0.65)";
     context.fillRect(0, 0, board.width, board.height);
 
-    // tekst
-    context.fillStyle = "white";
-    context.textAlign = "center";
-
-    context.font = "bold 64px Arial";
-    context.fillText("Game Over", board.width / 2, board.height / 2 - 40);
-
-    context.font = "24px Arial";
-    context.fillText("Press R to restart", board.width / 2, board.height / 2 + 20);
-    context.fillText("Press M to return to the level menu", board.width / 2, board.height / 2 + 80);
-
     context.restore();
 }
 

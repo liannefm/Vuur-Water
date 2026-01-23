@@ -281,9 +281,9 @@ export const mapData = {
             "id": 1769125349935,
             "type": "block",
             "x": 203,
-            "y": 847,
+            "y": 873,
             "width": 60,
-            "height": 198
+            "height": 175
         },
         {
             "id": 1769125370381,
@@ -322,7 +322,7 @@ export const mapData = {
             "type": "block",
             "x": 25,
             "y": 752,
-            "width": 27,
+            "width": 54,
             "height": 60
         },
         {
@@ -360,8 +360,8 @@ export const mapData = {
         {
             "id": 1769125617209,
             "type": "block",
-            "x": 1351,
-            "y": 1202,
+            "x": 1403,
+            "y": 1201,
             "width": 24,
             "height": 60
         },
@@ -377,7 +377,7 @@ export const mapData = {
             "id": 1769125699359,
             "type": "door",
             "x": 714,
-            "y": 1458,
+            "y": 1448,
             "width": 121,
             "height": 144,
             "doorType": "firedoor"
@@ -386,7 +386,7 @@ export const mapData = {
             "id": 1769125712281,
             "type": "door",
             "x": 1053,
-            "y": 1459,
+            "y": 1448,
             "width": 121,
             "height": 144,
             "doorType": "waterdoor"
