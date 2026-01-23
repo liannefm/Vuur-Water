@@ -13,9 +13,9 @@ include('assets/includes/header.php');
         </div>
 
         <div id="levelkeuze">
-            <a href="level-3.php" class="level extra"></a>
-            <a href="level-2.php" class="level extra"></a>
-            <a href="level-1.php" class="level main"></a>
+            <a href="levels.php?level=3" class="level extra"></a>
+            <a href="levels.php?level=2" class="level extra"></a>
+            <a href="levels.php?level=1" class="level main"></a>
         </div>
 
         <!-- <div id="level1button">
@@ -35,4 +35,5 @@ include('assets/includes/header.php');
     </div>
 </body>
 <script src="assets/js/main.js"></script>
+
 </html>
