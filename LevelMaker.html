@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Firegirl & Waterman Level Editor</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* ===== TOOLBAR ===== */
+        #toolbar {
+            width: 260px;
+            background: #222;
+            color: white;
+            padding: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 6px;
+            border: none;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* ===== TOOLBAR KLEUREN ===== */
+        #toolbar button.toolbar-poison {
+            background: purple;
+        }
+
+        #toolbar button.toolbar-lava {
+            background: orange;
+        }
+
+        #toolbar button.toolbar-water {
+            background: blue;
+        }
+
+        #toolbar button.toolbar-door-fire {
+            background: orange;
+        }
+
+        #toolbar button.toolbar-door-water {
+            background: blue;
+        }
+
+        #toolbar button.toolbar-button {
+            background: yellow;
+            color: black;
+        }
+
+        /* ===== BASIS BLOK ===== */
+        .wall {
+            background: gray;
+        }
+
+        /* ===== ACTIE KNOPPEN ===== */
+        #placeBtn {
+            background: green;
+        }
+
+        #deleteBtn {
+            background: darkred;
+        }
+
+        #saveBtn {
+            background: #444;
+        }
+
+        /* ===== VIEWPORT ===== */
+        #viewport {
+            flex: 1;
+            overflow: scroll;
+            background: #bbb;
+        }
+
+        /* ===== WORLD ===== */
+        #world {
+            position: relative;
+            width: 5000px;
+            height: 5000px;
+            background-image:
+                linear-gradient(to right, #ccc 1px, transparent 1px),
+                linear-gradient(to top, #ccc 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* ===== BLOKKEN ===== */
+        .block {
+            position: absolute;
+            cursor: move;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .selected {
+            outline: 2px dashed yellow;
+        }
+
+        /* ===== DRIEHOEK BLOKKEN (RESIZE FIX) ===== */
+        .block.triangle {
+            background: transparent;
+            /* belangrijk */
+        }
+
+        /* De echte driehoek (wordt NIET gebruikt voor handles) */
+        .block.triangle::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgb(65, 65, 65);
+            pointer-events: none;
+        }
+
+        /* Links */
+        .block.triangle.left::before {
+            clip-path: polygon(0 0, 100% 100%, 0 100%);
+        }
+
+        /* Rechts */
+        .block.triangle.right::before {
+            clip-path: polygon(0 100%, 100% 0, 100% 100%);
+        }
+
+        /* ===== SPAWNS (WARE SPELER GROOTTE) ===== */
+        .spawn {
+            position: absolute;
+            width: 50px;
+            height: 100px;
+            cursor: move;
+            border: 2px solid white;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .spawn.fire {
+            background-image: url('assets/img/players/vuur-poppetje.png');
+        }
+
+        .spawn.water {
+            background-image: url('assets/img/players/water-poppetje.png');
+        }
+
+        #toolbar button.toolbar-spawn-fire {
+            background: darkred;
+        }
+
+        #toolbar button.toolbar-spawn-water {
+            background: darkblue;
+        }
+
+        /* ===== OBJECT KLEUREN (fallback) ===== */
+        .poison {
+            background: purple;
+        }
+
+        .fire-poison {
+            background: orange;
+        }
+
+        .water-poison {
+            background: blue;
+        }
+
+        /* ===== DEUREN (AANGEPAST) ===== */
+        .door.firedoor {
+            background: orange;
+        }
+
+        .door.waterdoor {
+            background: blue;
+        }
+
+        /* ===== KNOP ===== */
+        .button {
+            background: yellow;
+            border: 2px solid #222;
+            border-radius: 6px;
+        }
+
+        /* ===== OBJECT AFBEELDINGEN ===== */
+
+        /* Normaal blok */
+        .block.wall {
+            background: gray;
+        }
+
+        /* Poison / Lava / Water */
+        .block.poison {
+            background-image: url('assets/img/poison/poison-frame-1.png');
+        }
+
+        .block.poison.fire-poison {
+            background-image: url('assets/img/poison/fire-frame-1.png');
+        }
+
+        .block.poison.water-poison {
+            background-image: url('assets/img/poison/water-frame-1.png');
+        }
+
+        /* Deuren */
+        .block.door.firedoor {
+            background-image: url('assets/img/doors/firedoor.png');
+        }
+
+        .block.door.waterdoor {
+            background-image: url('assets/img/doors/waterdoor.png');
+        }
+
+        /* Knop */
+        .block.button {
+            background-image: url('assets/img/buttons/yellow.png');
+            border: none;
+            border-radius: 6px;
+        }
+
+        /* ===== RESIZE HANDLES ===== */
+        .handle {
+            width: 10px;
+            height: 10px;
+            background: white;
+            border: 1px solid black;
+            position: absolute;
+        }
+
+        .handle.right {
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: ew-resize;
+        }
+
+        .handle.top {
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: ns-resize;
+        }
+
+        .handle.corner {
+            right: -6px;
+            top: -6px;
+            cursor: nwse-resize;
+        }
+
+        #resetBtn {
+            background: #900;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== TOOLBAR ===== -->
+    <div id="toolbar">
+        <h4>Blokken</h4>
+        <button class="wall" onclick="setType('wall')">blok</button>
+        <button class="wall" onclick="setType('tri-left')">Driehoek links</button>
+        <button class="wall" onclick="setType('tri-right')">Driehoek rechts</button>
+
+        <h4>Objecten</h4>
+        <button class="toolbar-poison" onclick="setType('poison')">Poison</button>
+        <button class="toolbar-lava" onclick="setType('fire-poison')">Lava</button>
+        <button class="toolbar-water" onclick="setType('water-poison')">Water</button>
+
+        <button class="toolbar-door-fire" onclick="setType('firedoor')">Fire Door</button>
+        <button class="toolbar-door-water" onclick="setType('waterdoor')">Water Door</button>
+
+        <button class="toolbar-button" onclick="setType('button-blue')">Knop</button>
+
+
+        <h4>Spawns</h4>
+        <button class="toolbar-spawn-fire" onclick="placeSpawn('fire')">Firegirl spawn</button>
+        <button class="toolbar-spawn-water" onclick="placeSpawn('water')">Watergirl spawn</button>
+
+        <h4>Opties</h4>
+        <button id="placeBtn">➕ Plaats blok</button>
+        <button id="deleteBtn">❌ Verwijder geselecteerde</button>
+
+        <h4>Einde</h4>
+        <button id="saveBtn">💾 Save level</button>
+        <button id="resetBtn">🗑️ Reset level</button>
+    </div>
+
+    <!-- ===== VIEWPORT / WORLD ===== -->
+    <div id="viewport">
+        <div id="world"></div>
+    </div>
+
+    <script>
+        /* ===== VARIABELEN ===== */
+        let currentType = null;
+        let selected = null;
+        let action = null;
+        let startX, startY, startW, startH, startL, startB;
+
+        const world = document.getElementById("world");
+        const viewport = document.getElementById("viewport");
+
+        let fireSpawn = null;
+        let waterSpawn = null;
+
+        /* Start links-onder */
+        viewport.scrollLeft = 0;
+        viewport.scrollTop = world.offsetHeight;
+
+        /* ===== LOCAL STORAGE ===== */
+        const STORAGE_KEY = "fgwm_last_level";
+        const LAST_TOOL_KEY = "fgwm_last_tool";
+
+        function saveToStorage(level) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(level));
+        }
+
+        function loadFromStorage() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return null;
+            try {
+                return JSON.parse(raw);
+            } catch {
+                return null;
+            }
+        }
+
+        /* ===== TOOL ONTHOUDEN ===== */
+        function setType(type) {
+            currentType = type;
+            localStorage.setItem(LAST_TOOL_KEY, type);
+        }
+
+        /* Restore last tool */
+        const lastTool = localStorage.getItem(LAST_TOOL_KEY);
+        if (lastTool) currentType = lastTool;
+
+        /* ===== LEVEL BOUWEN & AUTOSAVE ===== */
+        function autoSaveLevel() {
+            // Als je wil dat hij óók opslaat zonder spawns, haal deze if weg.
+            if (!fireSpawn || !waterSpawn) return;
+
+            const objects = [];
+
+            document.querySelectorAll(".block").forEach(b => {
+                let type = "block";
+                let extra = {};
+
+                if (b.classList.contains("triangle")) {
+                    type = "triangle";
+                    extra.triangleType = b.dataset.triangleType || "left";
+                }
+
+                if (b.classList.contains("poison")) {
+                    type = "poison";
+                    extra.poisonType = b.dataset.poisonType || "poison";
+                }
+
+                if (b.classList.contains("door")) {
+                    type = "door";
+                    extra.doorType = b.dataset.doorType || "firedoor";
+                }
+
+                if (b.classList.contains("button")) {
+                    type = "button";
+                    extra.color = b.dataset.color || "blue";
+                    extra.targetID = b.dataset.target === "" ? null : Number(b.dataset.target);
+                }
+
+                objects.push({
+                    id: b.dataset.id ? Number(b.dataset.id) : Date.now(),
+                    type,
+                    x: b.offsetLeft,
+                    y: parseInt(b.style.bottom),
+                    width: b.offsetWidth,
+                    height: b.offsetHeight,
+                    ...extra
+                });
+            });
+
+            const level = {
+                fireSpawn: { x: fireSpawn.offsetLeft, y: parseInt(fireSpawn.style.bottom) },
+                waterSpawn: { x: waterSpawn.offsetLeft, y: parseInt(waterSpawn.style.bottom) },
+                objects
+            };
+
+            saveToStorage(level);
+        }
+
+        /* ===== LEVEL TERUGTEKENEN ===== */
+        function clearWorld() {
+            world.querySelectorAll(".block, .spawn").forEach(el => el.remove());
+            fireSpawn = null;
+            waterSpawn = null;
+            selected = null;
+        }
+
+        function createBlockFromData(data) {
+            const block = document.createElement("div");
+            block.classList.add("block");
+
+            // id bewaren (voor stabielere autosave)
+            if (data.id != null) block.dataset.id = data.id;
+
+            if (data.type === "block") {
+                block.classList.add("wall");
+            }
+            else if (data.type === "triangle") {
+                const t = data.triangleType || "left";
+                block.classList.add("triangle", t);
+                block.dataset.triangleType = t;
+            }
+            else if (data.type === "poison") {
+                block.classList.add("poison");
+                const pType = data.poisonType || "poison";
+                block.dataset.poisonType = pType;
+
+                if (pType === "fire") block.classList.add("fire-poison");
+                else if (pType === "water") block.classList.add("water-poison");
+            }
+            else if (data.type === "door") {
+                const dType = data.doorType || "firedoor";
+                block.classList.add("door", dType);          // <-- belangrijk voor kleur/afbeelding
+                block.dataset.doorType = dType;
+            }
+            else if (data.type === "button") {
+                block.classList.add("button");
+                block.dataset.color = data.color || "blue";
+                block.dataset.target = (data.targetID ?? "");
+            }
+            else {
+                block.classList.add("wall");
+            }
+
+            block.style.width = (data.width ?? 60) + "px";
+            block.style.height = (data.height ?? 60) + "px";
+            block.style.left = (data.x ?? 0) + "px";
+            block.style.bottom = (data.y ?? 0) + "px";
+
+            addHandles(block);
+            world.appendChild(block);
+            return block;
+        }
+
+        function createSpawnFromData(type, data) {
+            if (type === "fire" && fireSpawn) fireSpawn.remove();
+            if (type === "water" && waterSpawn) waterSpawn.remove();
+
+            const spawn = document.createElement("div");
+            spawn.className = "spawn " + type;
+            spawn.style.left = data.x + "px";
+            spawn.style.bottom = data.y + "px";
+
+            spawn.addEventListener("mousedown", e => {
+                action = "move";
+                select(spawn);
+                startX = e.clientX;
+                startY = e.clientY;
+                startL = spawn.offsetLeft;
+                startB = parseInt(spawn.style.bottom);
+            });
+
+            spawn.addEventListener("click", e => {
+                e.stopPropagation();
+                select(spawn);
+            });
+
+            world.appendChild(spawn);
+
+            if (type === "fire") fireSpawn = spawn;
+            if (type === "water") waterSpawn = spawn;
+
+            return spawn;
+        }
+
+        function renderLevel(level) {
+            clearWorld();
+
+            if (level.fireSpawn) createSpawnFromData("fire", level.fireSpawn);
+            if (level.waterSpawn) createSpawnFromData("water", level.waterSpawn);
+
+            const list = level.blocks ?? level.objects ?? [];
+            list.forEach(b => createBlockFromData(b));
+        }
+
+        /* ===== BLOK PLAATSEN ===== */
+        document.getElementById("placeBtn").onclick = () => {
+            if (!currentType) return alert("Kies eerst een bloktype");
+
+            const block = document.createElement("div");
+            block.classList.add("block");
+            block.dataset.id = Date.now();
+
+            let defaultW = 60;
+            let defaultH = 60;
+
+            if (currentType === "wall") {
+                block.classList.add("wall");
+            }
+            else if (currentType === "tri-left") {
+                block.classList.add("triangle", "left");
+                block.dataset.triangleType = "left";
+            }
+            else if (currentType === "tri-right") {
+                block.classList.add("triangle", "right");
+                block.dataset.triangleType = "right";
+            }
+            else if (currentType === "poison") {
+                block.classList.add("poison");
+                block.dataset.poisonType = "poison";
+                defaultW = 150; defaultH = 50;
+            }
+            else if (currentType === "fire-poison") {
+                block.classList.add("poison", "fire-poison");
+                block.dataset.poisonType = "fire";
+                defaultW = 150; defaultH = 50;
+            }
+            else if (currentType === "water-poison") {
+                block.classList.add("poison", "water-poison");
+                block.dataset.poisonType = "water";
+                defaultW = 150; defaultH = 50;
+            }
+            else if (currentType === "firedoor") {
+                block.classList.add("door", "firedoor");
+                block.dataset.doorType = "firedoor";
+                defaultW = 121; defaultH = 144;
+            }
+            else if (currentType === "waterdoor") {
+                block.classList.add("door", "waterdoor");
+                block.dataset.doorType = "waterdoor";
+                defaultW = 121; defaultH = 144;
+            }
+            else if (currentType === "button-blue") {
+                block.classList.add("button");
+                block.dataset.color = "blue";
+                block.dataset.target = "";
+                defaultW = 74; defaultH = 31;
+            }
+            else {
+                return alert("Onbekend type: " + currentType);
+            }
+
+            block.style.left = "0px";
+            block.style.bottom = "0px";
+            block.style.width = defaultW + "px";
+            block.style.height = defaultH + "px";
+
+            addHandles(block);
+            world.appendChild(block);
+            select(block);
+
+            autoSaveLevel(); // ✅ autosave na plaatsen
+        };
+
+        /* ===== SPAWN PLAATSEN ===== */
+        function placeSpawn(type) {
+            if (type === "fire" && fireSpawn) fireSpawn.remove();
+            if (type === "water" && waterSpawn) waterSpawn.remove();
+
+            const spawn = document.createElement("div");
+            spawn.className = "spawn " + type;
+            spawn.style.left = "0px";
+            spawn.style.bottom = "0px";
+
+            spawn.addEventListener("mousedown", e => {
+                action = "move";
+                select(spawn);
+                startX = e.clientX;
+                startY = e.clientY;
+                startL = spawn.offsetLeft;
+                startB = parseInt(spawn.style.bottom);
+            });
+
+            spawn.addEventListener("click", e => {
+                e.stopPropagation();
+                select(spawn);
+            });
+
+            world.appendChild(spawn);
+
+            if (type === "fire") fireSpawn = spawn;
+            if (type === "water") waterSpawn = spawn;
+
+            select(spawn);
+            autoSaveLevel(); // ✅ autosave na spawn plaatsen
+        }
+
+        /* ===== HANDLES ===== */
+        function addHandles(block) {
+            ["right", "top", "corner"].forEach(type => {
+                const h = document.createElement("div");
+                h.className = "handle " + type;
+                block.appendChild(h);
+
+                h.addEventListener("mousedown", e => {
+                    e.stopPropagation();
+                    action = type;
+                    select(block);
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    startW = block.offsetWidth;
+                    startH = block.offsetHeight;
+                });
+            });
+
+            block.addEventListener("mousedown", e => {
+                if (e.target.classList.contains("handle")) return;
+                action = "move";
+                select(block);
+                startX = e.clientX;
+                startY = e.clientY;
+                startL = block.offsetLeft;
+                startB = parseInt(block.style.bottom);
+            });
+
+            block.addEventListener("click", e => {
+                e.stopPropagation();
+                select(block);
+            });
+        }
+
+        /* ===== MOUSE MOVE ===== */
+        document.addEventListener("mousemove", e => {
+            if (!action || !selected) return;
+
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+
+            if (action === "move") {
+                selected.style.left = startL + dx + "px";
+                selected.style.bottom = startB - dy + "px";
+            }
+
+            if (action === "right") {
+                selected.style.width = Math.max(20, startW + dx) + "px";
+            }
+
+            if (action === "top") {
+                selected.style.height = Math.max(20, startH - dy) + "px";
+            }
+
+            if (action === "corner") {
+                selected.style.width = Math.max(20, startW + dx) + "px";
+                selected.style.height = Math.max(20, startH - dy) + "px";
+            }
+        });
+
+        /* ===== STOP (autosave bij loslaten) ===== */
+        document.addEventListener("mouseup", () => {
+            if (action) autoSaveLevel(); // ✅ autosave na slepen/resizen
+            action = null;
+        });
+
+        /* ===== SELECT ===== */
+        function select(el) {
+            document.querySelectorAll(".selected").forEach(e => e.classList.remove("selected"));
+            selected = el;
+            el.classList.add("selected");
+        }
+
+        /* ===== DELETE ===== */
+        document.getElementById("deleteBtn").onclick = () => {
+            if (!selected) return;
+
+            if (selected === fireSpawn) fireSpawn = null;
+            if (selected === waterSpawn) waterSpawn = null;
+
+            selected.remove();
+            selected = null;
+
+            autoSaveLevel(); // ✅ autosave na delete
+        };
+
+        /* ===== SAVE (handmatig) ===== */
+        document.getElementById("saveBtn").onclick = () => {
+            if (!fireSpawn || !waterSpawn) {
+                alert("Je moet BOTH Firegirl en Waterman spawn plaatsen!");
+                return;
+            }
+
+            autoSaveLevel(); // we gebruiken dezelfde builder
+            alert("Level opgeslagen ✅ (wordt onthouden bij refresh)");
+
+            const last = loadFromStorage();
+            console.clear();
+            console.log("LEVEL DATA:");
+            console.log(JSON.stringify(last, null, 2));
+        };
+
+        document.getElementById("resetBtn").onclick = () => {
+            const ok = confirm("Weet je zeker dat je het hele level wilt verwijderen?");
+            if (!ok) return;
+
+            // alles uit de world verwijderen
+            world.querySelectorAll(".block, .spawn").forEach(el => el.remove());
+
+            // variabelen resetten
+            fireSpawn = null;
+            waterSpawn = null;
+            selected = null;
+
+            // localStorage leegmaken
+            localStorage.removeItem("fgwm_last_level");
+
+            alert("Level is volledig leeg");
+        };
+
+        /* ===== AUTO LOAD ===== */
+        const last = loadFromStorage();
+        if (last) {
+            renderLevel(last);
+        }
+    </script>
+
+</body>
+
+</html>

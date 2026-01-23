@@ -2,6 +2,7 @@ import { Block } from './objects/block.js';
 import { Poison } from './objects/poison.js';
 import { Door } from './objects/door.js';
 import { Button } from './objects/button.js';
+import { Triangle } from './objects/triangle.js';
 
 export const doors = [];
 
@@ -18,6 +19,14 @@ export function loadGameObjects() {
         if (obj.type === "block") {
             gameObjects.push(new Block({
                 id: obj.id,
+                position: { x: obj.x, y: obj.y },
+                size: { width: obj.width, height: obj.height }
+            }));
+        }
+        else if (obj.type === "triangle") {
+            gameObjects.push(new Triangle({
+                id: obj.id,
+                triangleType: obj.triangleType, // "left" of "right"
                 position: { x: obj.x, y: obj.y },
                 size: { width: obj.width, height: obj.height }
             }));
