@@ -6,7 +6,7 @@ export const PLAYER_MAX_HEIGHT = 100;
 export const PLAYER_SPEED = 3.5;
 export const WALK_FRAME_SPEED = 14; // lager = sneller wisselen
 export const GRAVITY = 0.4;
-export const JUMP_POWER = 10;
+export const JUMP_POWER = 13;
 
 export const PLAYER_CONFIGS = {
     water: {
@@ -79,3 +79,8 @@ export const BUTTON_CONFIGS = {
     white: 'assets/img/buttons/white.png',
     yellow: 'assets/img/buttons/yellow.png'
 }
+
+export const camera = {
+    x: 0,
+    y: 0
+};

@@ -5,6 +5,8 @@ import { gameObjects } from './objects.js';
 import { gameOver } from './game.js';
 
 export const players = {};
+const MAX_STEP_HEIGHT = 30; // hoeveel pixels hij automatisch omhoog mag stappen
+
 
 class Player {
     constructor({ type, position, }) {
@@ -145,8 +147,29 @@ class Player {
         for (const key in gameObjects) {
             const object = gameObjects[key];
 
-            if (object.type !== 'block' && object.type !== 'poison') continue;
+            // we nemen triangle ook mee
+            if (object.type !== 'block' && object.type !== 'poison' && object.type !== 'triangle') continue;
 
+            if (object.type === 'triangle') {
+                // voet van speler (midden onder)
+                const footX = this.position.x + this.size.width / 2;
+                const footY = this.position.y + this.size.height;
+
+                // alleen als je valt
+                if (this.velocity.y > 0 && object.isPointInsideSolid(footX, footY)) {
+                    const xLocal = footX - object.position.x;
+                    const slopeYLocal = object.heightAtLocalX(xLocal);
+                    const slopeWorldY = object.position.y + slopeYLocal;
+
+                    this.position.y = slopeWorldY - this.size.height;
+                    this.velocity.y = 0;
+                    this.onGround = true;
+                }
+
+                continue; // triangle klaar
+            }
+
+            // block/poison
             if (this.checkCollision(this, object)) {
 
                 if (typeof object.onTouch === "function") {
@@ -164,28 +187,83 @@ class Player {
                     this.velocity.y = 0;
                 }
             }
-
         }
     }
 
     moveX(direction) {
+        const oldX = this.position.x;
+        const oldY = this.position.y;
+
+        // 1) beweeg in X
         this.position.x += direction * PLAYER_SPEED;
 
         this.applyTouch();
 
-        for (const key in gameObjects) {
-            const object = gameObjects[key];
+        // 2) Botsing met BLOCK/POISON oplossen (triangles NIET!)
+        const collidesBlockPoison = () => {
+            for (const key in gameObjects) {
+                const obj = gameObjects[key];
+                if (obj.type !== 'block' && obj.type !== 'poison') continue;
+                if (this.checkCollision(this, obj)) return obj;
+            }
+            return null;
+        };
 
-            if (object.type !== 'block' && object.type !== 'poison') continue;
-            if (this.checkCollision(this, object)) {
-                if (direction > 0) {
-                    this.position.x = object.position.x - this.size.width;
-                } else if (direction < 0) {
-                    this.position.x = object.position.x + object.size.width;
+        let hit = collidesBlockPoison();
+
+        // 3) Step-up proberen alleen voor block/poison
+        if (hit && this.onGround) {
+            for (let step = 1; step <= MAX_STEP_HEIGHT; step++) {
+                this.position.y = oldY - step;
+
+                // als je nu nergens block/poison raakt, is step gelukt
+                if (!collidesBlockPoison()) {
+                    hit = null;
+                    break;
                 }
+            }
+            // terugzetten als het niet lukt
+            if (hit) this.position.y = oldY;
+        }
+
+        // 4) Als nog steeds botsing: normale X push-out (alleen block/poison)
+        if (hit) {
+            if (direction > 0) {
+                this.position.x = hit.position.x - this.size.width;
+            } else if (direction < 0) {
+                this.position.x = hit.position.x + hit.size.width;
+            }
+        }
+
+        // 5) ✅ TRIANGLE: na X-beweging "op de helling leggen" (geen X push!)
+        for (const key in gameObjects) {
+            const tri = gameObjects[key];
+            if (tri.type !== 'triangle') continue;
+
+            // voet van speler (midden onder)
+            const footX = this.position.x + this.size.width / 2;
+
+            // alleen als voet boven de triangle-boundingbox zit qua X
+            if (footX < tri.position.x || footX > tri.position.x + tri.size.width) continue;
+
+            const xLocal = footX - tri.position.x;
+            const slopeYLocal = tri.heightAtLocalX(xLocal);
+            const slopeWorldY = tri.position.y + slopeYLocal;
+
+            const playerBottom = this.position.y + this.size.height;
+
+            // Als je voet "in" de triangle zit of net erboven/erin drukt, snap naar slope
+            // en alleen als het verschil niet te groot is (anders voelt het als teleport)
+            const diff = playerBottom - slopeWorldY;
+
+            if (diff >= 0 && diff <= MAX_STEP_HEIGHT + 2) {
+                this.position.y = slopeWorldY - this.size.height;
+                this.velocity.y = 0;
+                this.onGround = true;
             }
         }
     }
+
 
 
     update() {
