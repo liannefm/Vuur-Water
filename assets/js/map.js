@@ -135,7 +135,7 @@ export const mapData = {
                 "x": 23,
                 "y": 640,
                 "width": 307,
-                "height": 47
+                "height": 54
             },
             {
                 "id": 1769124471204,
@@ -194,23 +194,23 @@ export const mapData = {
                 "x": 480,
                 "y": 638,
                 "width": 232,
-                "height": 50
+                "height": 58
             },
             {
                 "id": 1769124640906,
                 "type": "block",
-                "x": 864,
+                "x": 863,
                 "y": 641,
                 "width": 212,
-                "height": 49
+                "height": 53
             },
             {
                 "id": 1769124664389,
                 "type": "block",
                 "x": 1224,
-                "y": 643,
+                "y": 641,
                 "width": 68,
-                "height": 47
+                "height": 54
             },
             {
                 "id": 1769124712075,
