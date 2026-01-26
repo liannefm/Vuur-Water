@@ -32,7 +32,6 @@ export class Poison {
         if (this.poisonType == 'poison' ||
             (this.poisonType == 'fire' && playerType == 'water') ||
             (this.poisonType == 'water' && playerType == 'fire')) {
-            console.log("DOOOOOOD");
             setGameOver(true);
         }
     }

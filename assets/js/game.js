@@ -29,7 +29,7 @@ function updateCamera() {
     const p2 = players.water;
     if (!p1 || !p2) return;
 
-    // ✅ update "laatste grond Y" alleen als speler op de grond staat
+    // laatste grond Y" alleen als speler op de grond staat
     if (p1.onGround) lastGroundFireY = p1.position.y;
     if (p2.onGround) lastGroundWaterY = p2.position.y;
 
@@ -37,11 +37,11 @@ function updateCamera() {
     if (lastGroundFireY === null) lastGroundFireY = p1.position.y;
     if (lastGroundWaterY === null) lastGroundWaterY = p2.position.y;
 
-    // ✅ centerX blijft echt center (mag mee bij lopen)
+    // centerX blijft echt center (mag mee bij lopen)
     const centerX =
         (p1.position.x + p1.size.width / 2 + p2.position.x + p2.size.width / 2) / 2;
 
-    // ✅ centerY gebruikt de laatst bekende grond-hoogte (springt niet mee!)
+    // centerY gebruikt de laatst bekende grond-hoogte (springt niet mee!)
     const centerY =
         (lastGroundFireY + p1.size.height / 2 + lastGroundWaterY + p2.size.height / 2) / 2;
 
@@ -182,8 +182,11 @@ function checkLevelComplete() {
     const allDoorsOpen = doors.every(door => door.isOpen());
 
     if (allDoorsOpen) {
-        gamePaused = true;
         window.showLevelCompletePopup();
+        if (timerInterval) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
     }
 }
 
@@ -260,24 +263,24 @@ function togglePause() {
     }
 }
 
-
-// let levelCompleted = false;
-
 window.showLevelCompletePopup = function () {
+    const minutes = Math.floor(elapsedTime / 60);
+    const seconds = elapsedTime % 60;
+
+    document.querySelector('#levelCompletePopup .timeCompleted').textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
     document
         .getElementById('levelCompletePopup')
         .classList.add('active');
 };
 
 function update() {
-    // camera eerst updaten
     updateCamera();
 
     // reset transform + clear
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, board.width, board.height);
 
-    // background (blijft vast aan scherm)
+    // background blijft vast aan scherm
     if (BackgroundImg.complete && BackgroundImg.naturalWidth > 0) {
         context.drawImage(BackgroundImg, 0, 0, board.width, board.height);
     }

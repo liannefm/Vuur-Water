@@ -27,6 +27,7 @@ include('assets/includes/header.php');
     <div id="levelCompletePopup" class="popup-overlay">
         <div class="popup-content">
             <h2>🎉 You completed the level! 🎉</h2>
+            <h2 class="timeCompleted"></h2>
             <button class="popup-button" onclick="goToLevelScreen()">
                 Return
             </button>
