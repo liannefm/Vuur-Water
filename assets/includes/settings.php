@@ -24,6 +24,10 @@
                     <button id="soundbutton" class="sound-on">
                     <i class="fa-solid fa-volume-high"></i>
                     </button>
+
+                    <button id="resetProgress">
+                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                    </button>
                 </div>
             </div>
 

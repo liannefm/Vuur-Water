@@ -72,3 +72,23 @@ if (soundButton && audioElement) {
   });
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    const levelButtons = document.querySelectorAll(".level");
+
+    levelButtons.forEach(button => {
+        const level = button.dataset.level;
+
+        console.log('checking level', level); // DEBUG
+
+        if (localStorage.getItem(`level_${level}_completed`) === 'true') {
+            button.classList.add("completed");
+        }
+    });
+});
+
+document.getElementById("resetProgress")?.addEventListener("click", () => {
+    if (!confirm("Weet je zeker dat je alle voortgang wilt resetten?")) return;
+
+    localStorage.clear();
+    location.reload();
+});

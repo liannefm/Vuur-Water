@@ -383,6 +383,19 @@ body {
   background-repeat: no-repeat;
   background-position: center;
 }
+.level.completed {
+    background-image: url("assets/img/levelknopklaar.png");
+}
+
+#resetProgress {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 50px;
+    color: #464646;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+}
 
 .level.extra {
   transform: scale(1.1);
