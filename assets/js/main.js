@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.getElementById("resetProgress")?.addEventListener("click", () => {
-    if (!confirm("Weet je zeker dat je alle voortgang wilt resetten?")) return;
+    if (!confirm("Are you sure you want to reset your progress?")) return;
 
     localStorage.clear();
     location.reload();
