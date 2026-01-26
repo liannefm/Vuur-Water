@@ -182,12 +182,15 @@ function checkLevelComplete() {
     const allDoorsOpen = doors.every(door => door.isOpen());
 
     if (allDoorsOpen) {
+        localStorage.setItem(`level_${level}_completed`, 'true');
         window.showLevelCompletePopup();
+
         if (timerInterval) {
             clearInterval(timerInterval);
             timerInterval = null;
         }
     }
+
 }
 
 window.addEventListener("keydown", (e) => {
