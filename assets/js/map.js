@@ -689,5 +689,97 @@ export const mapData = {
                 "height": 20
             }
         ]
+    },
+
+    "3": {
+        "fireSpawn": {
+            "x": 188,
+            "y": 60
+        },
+        "waterSpawn": {
+            "x": 102,
+            "y": 60
+        },
+        "objects": [
+            {
+                "id": 1769553109006,
+                "type": "block",
+                "x": 0,
+                "y": 0,
+                "width": 2709,
+                "height": 60
+            },
+            {
+                "id": 1769553147835,
+                "type": "door",
+                "x": 862,
+                "y": 62,
+                "width": 121,
+                "height": 144,
+                "doorType": "firedoor"
+            },
+            {
+                "id": 1769553152838,
+                "type": "door",
+                "x": 1010,
+                "y": 65,
+                "width": 121,
+                "height": 144,
+                "doorType": "waterdoor"
+            },
+            {
+                "id": 1769553159859,
+                "type": "poison",
+                "x": 453,
+                "y": 11,
+                "width": 150,
+                "height": 50,
+                "poisonType": "water"
+            },
+            {
+                "id": 1769553168965,
+                "type": "poison",
+                "x": 1390,
+                "y": 11,
+                "width": 424,
+                "height": 50,
+                "poisonType": "fire"
+            },
+            {
+                "id": 1769553189463,
+                "type": "poison",
+                "x": 1931,
+                "y": 9,
+                "width": 150,
+                "height": 50,
+                "poisonType": "poison"
+            },
+            {
+                "id": 1769553203895,
+                "type": "block",
+                "x": 0,
+                "y": 0,
+                "width": 60,
+                "height": 691
+            },
+            {
+                "id": 1769553216426,
+                "type": "triangle",
+                "x": 63,
+                "y": 485,
+                "width": 94,
+                "height": 82,
+                "triangleType": "left"
+            },
+            {
+                "id": 1769553226132,
+                "type": "triangle",
+                "x": 163,
+                "y": 483,
+                "width": 95,
+                "height": 80,
+                "triangleType": "right"
+            }
+        ]
     }
 }
